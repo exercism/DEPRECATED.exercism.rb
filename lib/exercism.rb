@@ -29,8 +29,11 @@ class Exercism
     User.new(github_username, key)
   end
 
+  def self.config
+    @config ||= Config.read(home)
+  end
+
   def self.user
-    config = Config.read(home)
     User.new(config.github_username, config.key)
   end
 
