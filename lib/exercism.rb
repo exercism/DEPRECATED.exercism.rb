@@ -30,11 +30,12 @@ class Exercism
   end
 
   def self.config
-    @config ||= Config.read(home)
+    Config.read(home)
   end
 
   def self.user
-    User.new(config.github_username, config.key)
+    c = config
+    User.new(c.github_username, c.key)
   end
 
 end
