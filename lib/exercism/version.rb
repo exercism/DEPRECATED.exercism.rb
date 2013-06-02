@@ -1,3 +1,3 @@
-module Exercism
+class Exercism
   VERSION = "0.0.1"
 end
