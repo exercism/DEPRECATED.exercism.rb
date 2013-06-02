@@ -1,8 +1,10 @@
 require 'yaml'
 require 'etc'
+require 'fileutils'
 require 'exercism/version'
 require 'exercism/config'
 require 'exercism/user'
+require 'exercism/assignment'
 
 class Exercism
 

@@ -1,5 +1,4 @@
 require './test/test_helper'
-require 'fileutils'
 
 class ConfigTest < MiniTest::Unit::TestCase
 
