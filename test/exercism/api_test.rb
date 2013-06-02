@@ -41,4 +41,22 @@ class ApiTest < MiniTest::Unit::TestCase
     end
   end
 
+  def test_send_assignment_to_api
+    home = File.join(@project_dir, 'test/fixtures/home')
+    assignment_path = File.join(home, 'ruby/bob')
+    FileUtils.mkdir_p(assignment_path)
+    submission = File.join(assignment_path, 'bob.rb')
+    File.open(submission, 'w') do |f|
+      f.write "puts 'hello world'"
+    end
+
+    Exercism.stub(:home, home) do
+      FileUtils.cd assignment_path
+      VCR.use_cassette('alice-submits-bob') do
+        response = Exercism::Api.submit('bob.rb', {for: Exercism.user})
+        assert_equal 201, response.status
+      end
+    end
+  end
+
 end
