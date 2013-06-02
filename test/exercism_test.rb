@@ -11,8 +11,9 @@ class ExercismTest < MiniTest::Unit::TestCase
   def test_logged_in_user
     Exercism.stub(:home, './test/fixtures/home') do
       user = Exercism.user
+      key = '634abfb095ed621e1c793c9875fcd9fda455ea90'
       assert_equal 'alice', user.github_username
-      assert_equal '1eda0d4', user.key
+      assert_equal key, user.key
     end
   end
 

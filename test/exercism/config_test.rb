@@ -10,7 +10,7 @@ class ConfigTest < MiniTest::Unit::TestCase
 
   def test_read_config_file
     path = './test/fixtures/home'
-    key = '1eda0d4'
+    key = '634abfb095ed621e1c793c9875fcd9fda455ea90'
     config = Exercism::Config.read(path)
     assert_equal 'alice', config.github_username
     assert_equal key, config.key
