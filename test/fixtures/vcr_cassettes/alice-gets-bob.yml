@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:4567/api/v1/user/assignments/current?key=634abfb095ed621e1c793c9875fcd9fda455ea90
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      user-agent:
+      - exercism-CLI v0.0.1.pre-alpha
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - ! '*/*'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - text/html;charset=utf-8
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      set-cookie:
+      - rack.session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiJFYzk0MGNlOTJmYzJhNWIyOWU4YmUw%0AZmYxZTVmY2IxMTA2ZDcwNTk3OTRkZjFhZTEzOWJiZWRjMzdlMWE5ODNjMEki%0ADXRyYWNraW5nBjsARnsISSIUSFRUUF9VU0VSX0FHRU5UBjsARiItMGJiOWI4%0AY2FjOWEzZmQxMWMyNDVlZWE3YmIwNzk4NTZlZDY2NDc4MkkiGUhUVFBfQUND%0ARVBUX0VOQ09ESU5HBjsARiItZGRkMDk4OTE3NGYxOWE1YjE4NzkxMjEzY2M0%0AMGM1YTYwOWQyNTQ2Y0kiGUhUVFBfQUNDRVBUX0xBTkdVQUdFBjsARiItZGEz%0AOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ%3D%3D%0A--2dec80587d5e97276c5cc9656485b9801d551970;
+        path=/; HttpOnly
+      connection:
+      - close
+      content-length:
+      - '1961'
+    body:
+      encoding: US-ASCII
+      string: ! '{"track":"ruby","slug":"bob","readme":"# Bob\n\nBob is a lackadaisical
+        teenager. In conversation, his responses are very limited.\n\nBob answers
+        ''Sure.'' if you ask him a question.\n\nHe answers ''Whatever.'' if you tell
+        him something.\n\nHe answers ''Woah, chill out!'' if you yell at him (ALL
+        CAPS).\n\nHe says ''Fine. Be that way!'' if you address him without actually
+        saying anything.\n\nBob, Inspired by the 90s, is bringing back \"l33t sP34k\",
+        and he''ll teach you how to do it. Start any sentence with \"Bro, \", and
+        he''ll translate the rest of it into l33t sP34k for you.\n\n## Hints\n\n`gets`,
+        _get string_ is the opposite of `puts` _put string_.\n\nNotice that when you
+        type \"Something\" and then hit enter, you get the string\n`\"Something\\n\"`\n\n\n##
+        Source\n\nInspired by the ''Deaf Grandma'' exercise in Chris Pine''s Learn
+        to Program tutorial. [view source](http://pine.fm/LearnToProgram/?Chapter=06)\n","testfile":"test.rb","tests":"require
+        ''minitest/autorun''\nrequire ''minitest/pride''\nrequire_relative ''bob''\n\nclass
+        BobTest < MiniTest::Unit::TestCase\n  attr_reader :bob\n\n  def setup\n    @bob
+        = Bob.new\n  end\n\n  def test_stating_something\n    assert_equal ''Whatever.'',
+        bob.hey(''Tom-ay-to, tom-aaaah-to.'')\n  end\n\n  def test_shouting\n    skip\n    assert_equal
+        ''Woah, chill out!'', bob.hey(''WATCH OUT!'')\n  end\n\n  def test_asking_a_question\n    skip\n    assert_equal
+        ''Sure.'', bob.hey(''Does this cryogenic chamber make me look fat?'')\n  end\n\n  def
+        test_talking_forcefully\n    skip\n    assert_equal ''Whatever.'', bob.hey(\"Let''s
+        go make out behind the gym!\")\n  end\n\n  def test_shouting_numbers\n    skip\n    assert_equal
+        ''Woah, chill out!'', bob.hey(''1, 2, 3 GO!'')\n  end\n\n  def test_shouting_with_special_characters\n    skip\n    assert_equal
+        ''Woah, chill out!'', bob.hey(''ZOMG THE %^*@#$(*^ ZOMBIES ARE COMING!!11!!1!'')\n  end\n\n  def
+        test_silence\n    skip\n    assert_equal ''Fine, be that way.'', bob.hey('''')\n  end\n\nend\n"}'
+    http_version: '1.1'
+  recorded_at: Sun, 02 Jun 2013 15:46:06 GMT
+recorded_with: VCR 2.5.0
