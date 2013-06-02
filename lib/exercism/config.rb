@@ -35,6 +35,10 @@ class Exercism
       self
     end
 
+    def delete
+      FileUtils.rm(file) if File.exists?(file)
+    end
+
     private
 
     def from_yaml

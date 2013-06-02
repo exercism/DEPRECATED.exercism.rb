@@ -25,4 +25,14 @@ class ConfigTest < MiniTest::Unit::TestCase
     assert_equal key, config.key
   end
 
+  def test_delete_config_file
+    path = './test/fixtures'
+    key = '7a7096c'
+    data = {'github_username' => 'bob', 'key' => key}
+    config = Exercism::Config.write(path, data)
+    filename = config.file
+    config.delete
+    assert !File.exists?(filename)
+  end
+
 end
