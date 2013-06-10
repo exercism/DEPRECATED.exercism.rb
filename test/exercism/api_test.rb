@@ -23,6 +23,7 @@ class ApiTest < MiniTest::Unit::TestCase
   def teardown
     FileUtils.cd @project_dir
     FileUtils.rm_rf File.join(@project_dir, 'test/fixtures/home/ruby')
+    FileUtils.rm_rf File.join(@project_dir, 'test/fixtures/home/javascript')
   end
 
   def test_fetch_assignment_from_api

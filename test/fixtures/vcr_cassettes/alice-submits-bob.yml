@@ -8,7 +8,7 @@ http_interactions:
       string: ! '{"code":"puts ''hello world''","key":"634abfb095ed621e1c793c9875fcd9fda455ea90","path":"/Users/kytrinyx/code/exercism/test/fixtures/home/ruby/bob/bob.rb"}'
     headers:
       user-agent:
-      - exercism-CLI v0.0.1
+      - exercism-CLI v0.0.3
       accept:
       - application/json
       content-type:
@@ -26,16 +26,13 @@ http_interactions:
       - nosniff
       x-frame-options:
       - SAMEORIGIN
-      set-cookie:
-      - rack.session=BAh7CEkiD3Nlc3Npb25faWQGOgZFRiJFNWY4MWJlYmZkMjY0NzE5MDVmMDli%0AZDM0NzJmOTZhN2VmODgxM2JmMzY2NmY5NGJhZGZmNjEwMDQxZWI1YmJhM0ki%0ACWNzcmYGOwBGIkU4Y2M5MTRmMTIzOWUyMjA5NTZkM2ExZjhlYzFkM2ExN2U5%0ANTJjMDdmY2ZmY2Y4NTY3NGY0M2FhM2ZjMDFlNDhkSSINdHJhY2tpbmcGOwBG%0AewhJIhRIVFRQX1VTRVJfQUdFTlQGOwBGIi1hY2NhNzllM2E2MjE0MzY1NzUz%0AYmUyZGJlMTkyM2EyYmUyNjFjM2M1SSIZSFRUUF9BQ0NFUFRfRU5DT0RJTkcG%0AOwBGIi1kYTM5YTNlZTVlNmI0YjBkMzI1NWJmZWY5NTYwMTg5MGFmZDgwNzA5%0ASSIZSFRUUF9BQ0NFUFRfTEFOR1VBR0UGOwBGIi1kYTM5YTNlZTVlNmI0YjBk%0AMzI1NWJmZWY5NTYwMTg5MGFmZDgwNzA5%0A--0153d74f359b84b80ec7a049b9b11fff39c0abf0;
-        path=/; HttpOnly
       connection:
       - close
       content-length:
-      - '28'
+      - '53'
     body:
       encoding: US-ASCII
-      string: Saved submission on ruby/bob
+      string: ! '{"status":"saved","language":"ruby","exercise":"bob"}'
     http_version: '1.1'
-  recorded_at: Sun, 02 Jun 2013 16:47:15 GMT
+  recorded_at: Mon, 10 Jun 2013 22:30:44 GMT
 recorded_with: VCR 2.5.0

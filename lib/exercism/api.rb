@@ -12,8 +12,7 @@ class Exercism
         req.headers['User-Agent'] = "exercism-CLI v#{Exercism::VERSION}"
         req.params['key'] = user.key
       end
-      assignment = Assignment.new(JSON.parse(response.body))
-      assignment.save
+      Assignment.save(JSON.parse(response.body))
     end
 
     def self.submit(filename, options)

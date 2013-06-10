@@ -1,13 +1,19 @@
 class Exercism
   class Assignment
 
-    attr_reader :track, :slug, :readme, :testfile, :tests
+    def self.save(data)
+      data['assignments'].each do |attributes|
+        Assignment.new(attributes).save
+      end
+    end
+
+    attr_reader :track, :slug, :readme, :test_file, :tests
 
     def initialize(attributes)
       @track = attributes['track']
       @slug = attributes['slug']
       @readme = attributes['readme']
-      @testfile = attributes['testfile']
+      @test_file = attributes['test_file']
       @tests = attributes['tests']
     end
 
@@ -26,7 +32,7 @@ class Exercism
     end
 
     def tests_path
-      File.join(assignment_dir, testfile)
+      File.join(assignment_dir, test_file)
     end
 
     def assignment_dir

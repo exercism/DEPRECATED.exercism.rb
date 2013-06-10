@@ -24,7 +24,7 @@ class AssignmentTest < MiniTest::Unit::TestCase
       'track' => 'ruby',
       'slug' => 'queens',
       'readme' => 'Do it',
-      'testfile' => 'test.rb',
+      'test_file' => 'test.rb',
       'tests' => 'assert true'
     }
   end
