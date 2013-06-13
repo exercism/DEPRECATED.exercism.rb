@@ -6,18 +6,18 @@ class Exercism
       end
     end
 
-    def self.fetch_for(user)
+    def self.fetch_for(user, path)
       response = conn.get do |req|
         req.url '/api/v1/user/assignments/current'
         req.headers['User-Agent'] = "exercism-CLI v#{Exercism::VERSION}"
         req.params['key'] = user.key
       end
-      Assignment.save(JSON.parse(response.body))
+      Assignment.save(JSON.parse(response.body), path)
     end
 
     def self.submit(filename, options)
       user = options[:for]
-      path = File.join(FileUtils.pwd, filename)
+      path = File.join(filename)
       contents = File.read path
       response = conn.post do |req|
         req.url '/api/v1/user/assignments'

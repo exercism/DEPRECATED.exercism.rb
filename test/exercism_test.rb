@@ -20,7 +20,7 @@ class ExercismTest < MiniTest::Unit::TestCase
   def test_login_gives_you_a_user
     Exercism.stub(:home, './test/fixtures') do
       key = '97e9975'
-      user = Exercism.login('bob', key)
+      user = Exercism.login('bob', key, '/dev/null')
       assert_equal 'bob', user.github_username
       assert_equal key, user.key
     end
@@ -29,7 +29,7 @@ class ExercismTest < MiniTest::Unit::TestCase
   def test_login_writes_the_config_file
     Exercism.stub(:home, './test/fixtures') do
       key = '97e9975'
-      Exercism.login('bob', key)
+      Exercism.login('bob', key, '/tmp')
       user = Exercism.user
       assert_equal 'bob', user.github_username
       assert_equal key, user.key

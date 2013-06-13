@@ -16,25 +16,27 @@ end
 
 class ApiTest < MiniTest::Unit::TestCase
 
-  def setup
-    @project_dir = FileUtils.pwd
+  def project_dir
+    '/tmp'
+  end
+
+  def home
+    'test/fixtures/home'
   end
 
   def teardown
-    FileUtils.cd @project_dir
-    FileUtils.rm_rf File.join(@project_dir, 'test/fixtures/home/ruby')
-    FileUtils.rm_rf File.join(@project_dir, 'test/fixtures/home/javascript')
+    FileUtils.rm_rf File.join(project_dir, 'ruby')
+    FileUtils.rm_rf File.join(project_dir, 'javascript')
   end
 
   def test_fetch_assignment_from_api
-    home = File.join(@project_dir, 'test/fixtures/home')
-    readme_path = File.join(home, 'ruby/bob/README.md')
-    tests_path = File.join(home, 'ruby/bob/test.rb')
+    assignment_dir = File.join(project_dir, 'ruby', 'bob')
+    readme_path = File.join(assignment_dir, 'README.md')
+    tests_path = File.join(assignment_dir, 'test.rb')
 
     Exercism.stub(:home, home) do
-      FileUtils.cd home
       VCR.use_cassette('alice-gets-bob') do
-        Exercism::Api.fetch_for(Exercism.user)
+        Exercism::Api.fetch_for(Exercism.user, project_dir)
 
         Approvals.verify(File.read(readme_path), name: 'alice_gets_bob_readme')
         Approvals.verify(File.read(tests_path), name: 'alice_gets_bob_tests')
@@ -43,18 +45,16 @@ class ApiTest < MiniTest::Unit::TestCase
   end
 
   def test_send_assignment_to_api
-    home = File.join(@project_dir, 'test/fixtures/home')
-    assignment_path = File.join(home, 'ruby/bob')
-    FileUtils.mkdir_p(assignment_path)
-    submission = File.join(assignment_path, 'bob.rb')
+    assignment_dir = File.join(project_dir, 'ruby', 'bob')
+    FileUtils.mkdir_p(assignment_dir)
+    submission = File.join(assignment_dir, 'bob.rb')
     File.open(submission, 'w') do |f|
       f.write "puts 'hello world'"
     end
 
     Exercism.stub(:home, home) do
-      FileUtils.cd assignment_path
       VCR.use_cassette('alice-submits-bob') do
-        response = Exercism::Api.submit('bob.rb', {for: Exercism.user})
+        response = Exercism::Api.submit(submission, {for: Exercism.user})
         assert_equal 201, response.status
       end
     end

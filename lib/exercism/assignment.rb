@@ -1,13 +1,15 @@
 class Exercism
   class Assignment
 
-    def self.save(data)
+    def self.save(data, path)
+      assignments = []
       data['assignments'].each do |attributes|
-        Assignment.new(attributes).save
+        assignments << Assignment.new(attributes.merge('project_dir' => path)).save
       end
+      assignments
     end
 
-    attr_reader :track, :slug, :readme, :test_file, :tests
+    attr_reader :track, :slug, :readme, :test_file, :tests, :project_dir
 
     def initialize(attributes)
       @track = attributes['track']
@@ -15,6 +17,7 @@ class Exercism
       @readme = attributes['readme']
       @test_file = attributes['test_file']
       @tests = attributes['tests']
+      @project_dir = attributes['project_dir']
     end
 
     def save
@@ -23,6 +26,11 @@ class Exercism
         f.write readme
       end
       File.write tests_path, tests
+      self
+    end
+
+    def assignment_dir
+      @assignment_dir ||= File.join(project_dir, track, slug)
     end
 
     private
@@ -33,19 +41,6 @@ class Exercism
 
     def tests_path
       File.join(assignment_dir, test_file)
-    end
-
-    def assignment_dir
-      File.join(project_dir, track, slug)
-    end
-
-    def project_dir
-      dir = FileUtils.pwd
-      if File.basename(dir) == track
-        dir.gsub(/#{track}\z/, '')
-      else
-        dir
-      end
     end
   end
 end

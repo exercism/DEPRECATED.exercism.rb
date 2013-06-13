@@ -7,14 +7,21 @@ class Exercism
     def fetch
       require 'exercism'
 
-      Exercism::Api.fetch_for(Exercism.user)
+      assignments = Exercism::Api.fetch_for(Exercism.user, Exercism.project_dir)
+      if assignments.empty?
+        puts "No assignments fetched."
+      else
+        assignments.each do |assignment|
+          puts "Fetched #{File.join(assignment.assignment_dir)}"
+        end
+      end
     end
 
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
     def submit(file)
       require 'exercism'
 
-      Exercism::Api.submit(file, {for: Exercism.user})
+      Exercism::Api.submit(File.join(FileUtils.pwd, file), {for: Exercism.user})
     end
 
     desc "login", "Save exercism.io api credentials"
@@ -23,7 +30,12 @@ class Exercism
 
       username = ask("Your GitHub username:")
       key = ask("Your exercism.io API key:")
-      Exercism.login(username, key)
+      default_path = FileUtils.pwd
+      path = ask("What is your exercism exercises project path? (#{default_path})")
+      if path.empty?
+        path = default_path
+      end
+      Exercism.login(username, key, path)
 
       say("Your credentials have been written to #{Exercism.config.file}")
     end

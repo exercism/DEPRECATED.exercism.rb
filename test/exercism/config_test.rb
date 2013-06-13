@@ -14,21 +14,31 @@ class ConfigTest < MiniTest::Unit::TestCase
     config = Exercism::Config.read(path)
     assert_equal 'alice', config.github_username
     assert_equal key, config.key
+    assert_equal '/tmp', config.project_dir
   end
 
   def test_write_config_file
     path = './test/fixtures'
     key = '7a7096c'
-    data = {'github_username' => 'bob', 'key' => key}
+    data = {
+      'github_username' => 'bob',
+      'key' => key,
+      'project_dir' => '/dev/null'
+    }
     config = Exercism::Config.write(path, data)
     assert_equal 'bob', config.github_username
     assert_equal key, config.key
+    assert_equal '/dev/null', config.project_dir
   end
 
   def test_delete_config_file
     path = './test/fixtures'
     key = '7a7096c'
-    data = {'github_username' => 'bob', 'key' => key}
+    data = {
+      'github_username' => 'bob',
+      'key' => key,
+      'project_dir' => '/tmp'
+    }
     config = Exercism::Config.write(path, data)
     filename = config.file
     config.delete

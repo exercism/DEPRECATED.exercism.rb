@@ -9,11 +9,12 @@ class Exercism
       config = new(path)
       config.github_username = data['github_username']
       config.key = data['key']
+      config.project_dir = data['project_dir']
       config.save
     end
 
     attr_reader :file
-    attr_writer :github_username, :key
+    attr_writer :github_username, :key, :project_dir
 
     def initialize(path)
       @file = File.join(path, '.exercism')
@@ -27,9 +28,17 @@ class Exercism
       @key ||= from_yaml['key']
     end
 
+    def project_dir
+      @project_dir ||= from_yaml['project_dir']
+    end
+
     def save
       File.open file, 'w' do |f|
-        data = {'github_username' => github_username, 'key' => key}
+        data = {
+          'github_username' => github_username,
+          'key' => key,
+          'project_dir' => project_dir
+        }
         f.write data.to_yaml
       end
       self
