@@ -2,6 +2,10 @@
 
 Client gem for the warmup-exercise app exercism.io.
 
+[![Code Climate](https://codeclimate.com/github/kytrinyx/exercism.png)](https://codeclimate.com/github/kytrinyx/exercism)
+
+## Install
+
     $ gem install exercism
 
 ## Usage
