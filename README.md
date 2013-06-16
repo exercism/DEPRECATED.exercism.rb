@@ -3,6 +3,7 @@
 Client gem for the warmup-exercise app exercism.io.
 
 [![Code Climate](https://codeclimate.com/github/kytrinyx/exercism.png)](https://codeclimate.com/github/kytrinyx/exercism)
+[![Build Status](https://secure.travis-ci.org/kytrinyx/exercism.png?branch=master)](http://travis-ci.org/kytrinyx/exercism)
 
 ## Install
 
