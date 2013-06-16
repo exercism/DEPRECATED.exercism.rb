@@ -36,7 +36,7 @@ class ApiTest < MiniTest::Unit::TestCase
 
     Exercism.stub(:home, home) do
       VCR.use_cassette('alice-gets-bob') do
-        Exercism::Api.fetch_for(Exercism.user, project_dir)
+        Exercism::Api.new('http://localhost:4567', Exercism.user, project_dir).fetch
 
         Approvals.verify(File.read(readme_path), name: 'alice_gets_bob_readme')
         Approvals.verify(File.read(tests_path), name: 'alice_gets_bob_tests')
@@ -54,7 +54,7 @@ class ApiTest < MiniTest::Unit::TestCase
 
     Exercism.stub(:home, home) do
       VCR.use_cassette('alice-submits-bob') do
-        response = Exercism::Api.submit(submission, {for: Exercism.user})
+        response = Exercism::Api.new('http://localhost:4567', Exercism.user).submit(submission)
         assert_equal 201, response.status
       end
     end

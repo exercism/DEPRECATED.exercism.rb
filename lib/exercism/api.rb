@@ -1,22 +1,29 @@
 class Exercism
   class Api
-    def self.conn
-     conn = Faraday.new(:url => Exercism.url) do |c|
+
+    attr_reader :url, :user, :project_dir
+    def initialize(url, user, project_dir = nil)
+      @url = url
+      @user = user
+      @project_dir = project_dir
+    end
+
+    def conn
+     conn = Faraday.new(:url => url) do |c|
         c.use Faraday::Adapter::NetHttp
       end
     end
 
-    def self.fetch_for(user, path)
+    def fetch
       response = conn.get do |req|
         req.url '/api/v1/user/assignments/current'
         req.headers['User-Agent'] = "exercism-CLI v#{Exercism::VERSION}"
         req.params['key'] = user.key
       end
-      Assignment.save(JSON.parse(response.body), path)
+      Assignment.save(JSON.parse(response.body), project_dir)
     end
 
-    def self.submit(filename, options)
-      user = options[:for]
+    def submit(filename)
       path = File.join(filename)
       contents = File.read path
       response = conn.post do |req|

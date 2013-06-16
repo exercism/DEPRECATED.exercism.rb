@@ -4,10 +4,12 @@ class Exercism
   class CLI < Thor
 
     desc "fetch", "Fetch current assignment from exercism.io"
+    method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
     def fetch
       require 'exercism'
 
-      assignments = Exercism::Api.fetch_for(Exercism.user, Exercism.project_dir)
+      api = Exercism::Api.new(options[:host], Exercism.user, Exercism.project_dir)
+      assignments = api.fetch
       if assignments.empty?
         puts "No assignments fetched."
       else
@@ -18,10 +20,12 @@ class Exercism
     end
 
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
+    method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
     def submit(file)
       require 'exercism'
 
-      Exercism::Api.submit(File.join(FileUtils.pwd, file), {for: Exercism.user})
+      path = File.join(FileUtils.pwd, file)
+      Exercism::Api.new(options[:host], Exercism.user).submit(file)
     end
 
     desc "login", "Save exercism.io api credentials"

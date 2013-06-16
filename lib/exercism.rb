@@ -11,14 +11,6 @@ require 'exercism/api'
 
 class Exercism
 
-  def self.url
-    if ENV['EXERCISM_ENV'] == 'test'
-      'http://localhost:4567'
-    else
-      'http://exercism.herokuapp.com'
-    end
-  end
-
   def self.home
     Dir.home(Etc.getlogin)
   end
