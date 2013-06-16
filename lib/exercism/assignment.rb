@@ -25,7 +25,9 @@ class Exercism
       File.open readme_path, 'w' do |f|
         f.write readme
       end
-      File.write tests_path, tests
+      File.open tests_path, 'w' do |f|
+        f.write tests
+      end
       self
     end
 
