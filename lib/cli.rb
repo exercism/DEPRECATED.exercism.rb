@@ -39,6 +39,7 @@ class Exercism
       if path.empty?
         path = default_path
       end
+      path = File.expand_path(path)
       Exercism.login(username, key, path)
 
       say("Your credentials have been written to #{Exercism.config.file}")
