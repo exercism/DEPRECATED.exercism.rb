@@ -33,6 +33,7 @@ class Exercism
     end
 
     def save
+      FileUtils.mkdir_p(project_dir)
       File.open file, 'w' do |f|
         data = {
           'github_username' => github_username,
