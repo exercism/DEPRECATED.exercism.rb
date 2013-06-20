@@ -24,6 +24,10 @@ This retrieves the README and test suite for your current assignment.
 
 This submits `example.rb` on your current assignment.
 
+    $ export EXERCISM_ENV=development
+
+Reveals stack traces on errors.
+
 ## Contributing
 
 1. Fork it

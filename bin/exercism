@@ -1,7 +1,12 @@
 #!/usr/bin/env ruby
 
-trap("INT") { print "\nExiting \n"; exit }
+trap("INT") { print "\nExiting. \n"; exit }
 $:.unshift File.expand_path("../../lib", __FILE__)
 require 'cli'
 
-Exercism::CLI.start
+begin
+  Exercism::CLI.start
+rescue Exception => e
+  print "\nERROR: Something went wrong. Exiting.\n"
+  raise e if ENV['EXERCISM_ENV'] =~ /test|development/
+end
