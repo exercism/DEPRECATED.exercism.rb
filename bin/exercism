@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+trap("INT") { print "\nExiting \n"; exit }
 $:.unshift File.expand_path("../../lib", __FILE__)
 require 'cli'
 
