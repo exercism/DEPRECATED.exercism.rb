@@ -22,13 +22,21 @@ class Exercism
 
     def save
       FileUtils.mkdir_p assignment_dir
+      save_readme
+      save_tests unless File.exist?(tests_path)
+      self
+    end
+
+    def save_readme
       File.open readme_path, 'w' do |f|
         f.write readme
       end
+    end
+
+    def save_tests
       File.open tests_path, 'w' do |f|
         f.write tests
       end
-      self
     end
 
     def assignment_dir
