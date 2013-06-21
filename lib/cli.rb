@@ -25,7 +25,14 @@ class Exercism
       require 'exercism'
 
       path = File.join(FileUtils.pwd, file)
-      Exercism::Api.new(options[:host], Exercism.user).submit(file)
+      begin
+        Exercism::Api.new(options[:host], Exercism.user).submit(file)
+        puts "Your assignment has been submitted."
+        puts "Check the website for feedback in a bit."
+      rescue Exception => e
+        puts "There was an issue with your submission."
+        puts e.message
+      end
     end
 
     desc "login", "Save exercism.io api credentials"
