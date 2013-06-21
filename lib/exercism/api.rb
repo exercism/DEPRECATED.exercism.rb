@@ -16,24 +16,47 @@ class Exercism
 
     def fetch
       response = conn.get do |req|
-        req.url '/api/v1/user/assignments/current'
-        req.headers['User-Agent'] = "exercism-CLI v#{Exercism::VERSION}"
+        req.url endpoint('current')
+        req.headers['User-Agent'] = user_agent
         req.params['key'] = user.key
       end
-      Assignment.save(JSON.parse(response.body), project_dir)
+      save response.body
+    end
+
+    def peek
+      response = conn.get do |req|
+        req.url endpoint('next')
+        req.headers['User-Agent'] = user_agent
+        req.params['key'] = user.key
+      end
+      save response.body
     end
 
     def submit(filename)
       path = File.join(filename)
       contents = File.read path
       response = conn.post do |req|
-        req.url '/api/v1/user/assignments'
+        req.url endpoint
         req.headers['Accept'] = 'application/json'
         req.headers['Content-Type'] = 'application/json'
-        req.headers['User-Agent'] = "exercism-CLI v#{Exercism::VERSION}"
+        req.headers['User-Agent'] = user_agent
         req.body = {code: contents, key: user.key, path: path}.to_json
       end
       response
+    end
+
+    private
+
+    def user_agent
+      "exercism-CLI v#{Exercism::VERSION}"
+    end
+
+    def endpoint(action = nil)
+      "/api/v1/user/assignments/#{action}".chomp('/')
+    end
+
+    def save(body)
+      Assignment.save(JSON.parse(body), project_dir)
     end
   end
 end

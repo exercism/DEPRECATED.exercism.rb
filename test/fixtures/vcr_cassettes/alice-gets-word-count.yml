@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:4567/api/v1/user/assignments/next?key=634abfb095ed621e1c793c9875fcd9fda455ea90
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      user-agent:
+      - exercism-CLI v0.0.11
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - ! '*/*'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - text/html;charset=utf-8
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      set-cookie:
+      - rack.session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiJFNGI5Mjk5MGIzZTRhNTg4ZTFhYjk3%0AMTEwMWQxNjFmYWYzZWU0Y2YzNWEwN2NkMGEwZjg2NTlhODhhN2UyZGVkN0ki%0ADXRyYWNraW5nBjsARnsISSIUSFRUUF9VU0VSX0FHRU5UBjsARiItMGRiNzNi%0AZmE2YTU2YTE5ZjBjNGVhMTZiMDI3NThjMDUyMDAwNTZjZEkiGUhUVFBfQUND%0ARVBUX0VOQ09ESU5HBjsARiItZGRkMDk4OTE3NGYxOWE1YjE4NzkxMjEzY2M0%0AMGM1YTYwOWQyNTQ2Y0kiGUhUVFBfQUNDRVBUX0xBTkdVQUdFBjsARiItZGEz%0AOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ%3D%3D%0A--caf0bdcef72ce7876eda1635779b4e98e6cf1e73;
+        path=/; HttpOnly
+      connection:
+      - close
+      content-length:
+      - '1704'
+    body:
+      encoding: US-ASCII
+      string: ! '{"assignments":[{"track":"ruby","slug":"word-count","readme":"# Word
+        Count\n\nWrite a program that given a string can count the occurrences of
+        each word in that string.\n\n\n```ruby\nwords = Words.new(\"olly olly in come
+        free\")\nwords.count\n# => {\"olly\" => 2, \"in\" => 1, \"come\" => 1, \"free\"
+        => 1}\n```\n\n\n\n\n## Source\n\nThe golang tour [view source](http://tour.golang.org)\n","test_file":"test.rb","tests":"require
+        ''minitest/autorun''\nrequire ''minitest/pride''\nrequire_relative ''words''\n\nclass
+        WordsTest < MiniTest::Unit::TestCase\n\n  def test_count_one_word\n    words
+        = Words.new(\"word\")\n    counts = {\"word\" => 1}\n    assert_equal counts,
+        words.count\n  end\n\n  def test_count_one_of_each\n    skip\n    words =
+        Words.new(\"one of each\")\n    counts = {\"one\" => 1, \"of\" => 1, \"each\"
+        => 1}\n    assert_equal counts, words.count\n  end\n\n  def test_count_multiple_occurrences\n    skip\n    words
+        = Words.new(\"one fish two fish red fish blue fish\")\n    counts = {\"one\"=>1,
+        \"fish\"=>4, \"two\"=>1, \"red\"=>1, \"blue\"=>1}\n    assert_equal counts,
+        words.count\n  end\n\n  def test_ignore_punctuation\n    skip\n    words =
+        Words.new(\"car : carpet as java : javascript!!&@$%^&\")\n    counts = {\"car\"=>1,
+        \"carpet\"=>1, \"as\"=>1, \"java\"=>1, \"javascript\"=>1}\n    assert_equal
+        counts, words.count\n  end\n\n  def test_include_numbers\n    skip\n    words
+        = Words.new(\"testing, 1, 2 testing\")\n    counts = {\"testing\" => 2, \"1\"
+        => 1, \"2\" => 1}\n    assert_equal counts, words.count\n  end\n\n  def test_normalize_case\n    skip\n    words
+        = Words.new(\"go Go GO\")\n    counts = {\"go\" => 3}\n    assert_equal counts,
+        words.count\n  end\n\nend\n\n"}]}'
+    http_version: '1.1'
+  recorded_at: Fri, 21 Jun 2013 14:57:00 GMT
+recorded_with: VCR 2.5.0

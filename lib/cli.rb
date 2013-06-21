@@ -19,6 +19,22 @@ class Exercism
       end
     end
 
+    desc "peek", "Fetch upcoming assignment from exercism.io"
+    method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
+    def peek
+      require 'exercism'
+
+      api = Exercism::Api.new(options[:host], Exercism.user, Exercism.project_dir)
+      assignments = api.peek
+      if assignments.empty?
+        puts "No assignments fetched."
+      else
+        assignments.each do |assignment|
+          puts "Fetched #{File.join(assignment.assignment_dir)}"
+        end
+      end
+    end
+
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
     method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
     def submit(file)
