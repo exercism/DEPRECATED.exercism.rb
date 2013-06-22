@@ -3,6 +3,15 @@ require 'thor'
 class Exercism
   class CLI < Thor
 
+    desc "version", "Output current version of gem"
+    def version
+      require 'exercism'
+
+      puts Exercism::VERSION
+    end
+
+    map "-v" => "version", "--version" => "version"
+
     desc "fetch", "Fetch current assignment from exercism.io"
     method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
     def fetch
