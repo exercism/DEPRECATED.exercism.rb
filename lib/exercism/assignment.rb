@@ -2,11 +2,9 @@ class Exercism
   class Assignment
 
     def self.save(data, path)
-      assignments = []
-      data['assignments'].each do |attributes|
-        assignments << Assignment.new(attributes.merge('project_dir' => path)).save
+      data['assignments'].map do |attributes|
+        Assignment.new(attributes.merge('project_dir' => path)).save
       end
-      assignments
     end
 
     attr_reader :track, :slug, :readme, :test_file, :tests, :project_dir
