@@ -52,5 +52,13 @@ class AssignmentTest < MiniTest::Unit::TestCase
 
     assert_equal "assert false", File.read(tests_path)
   end
+
+  def test_save_and_return_assignments
+    data = { 'assignments' => [ assignment_data ] }
+    saved = Exercism::Assignment.save(data, project_dir)
+
+    assert_equal 1, saved.size
+    assert_equal assignment_data['slug'], saved.first.slug
+  end
 end
 
