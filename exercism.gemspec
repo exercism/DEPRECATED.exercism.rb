@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["katrina.owen@gmail.com"]
   spec.description   = %q{Client gem for the exercism.io app}
   spec.summary       = %q{This gem provides a command line client to allow users of the exercism.io application to easily fetch and submit assignments.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/kytrinyx/exercism"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
