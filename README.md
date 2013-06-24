@@ -4,6 +4,7 @@ Client gem for the warmup-exercise app exercism.io.
 
 [![Code Climate](https://codeclimate.com/github/kytrinyx/exercism.png)](https://codeclimate.com/github/kytrinyx/exercism)
 [![Build Status](https://travis-ci.org/kytrinyx/exercism.png?branch=master)](https://travis-ci.org/kytrinyx/exercism)
+[![Gem Version](https://badge.fury.io/rb/exercism.png)](https://rubygems.org/gems/exercism)
 
 ## Install
 
