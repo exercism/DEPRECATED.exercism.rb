@@ -1,6 +1,6 @@
 require './test/test_helper'
 
-class ExercismTest < MiniTest::Unit::TestCase
+class ExercismTest < Minitest::Test
 
   def teardown
     if File.exists?('./test/fixtures/.exercism')

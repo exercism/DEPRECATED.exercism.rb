@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "vcr", '~> 2.4'
   spec.add_development_dependency "fakeweb"
   spec.add_development_dependency "approvals"
-  spec.add_development_dependency "minitest", '~> 4.7'
+  spec.add_development_dependency "minitest", '~> 5.0'
 end

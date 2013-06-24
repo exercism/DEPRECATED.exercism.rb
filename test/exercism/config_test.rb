@@ -1,6 +1,6 @@
 require './test/test_helper'
 
-class ConfigTest < MiniTest::Unit::TestCase
+class ConfigTest < Minitest::Test
 
   def path
     './test/fixtures'
