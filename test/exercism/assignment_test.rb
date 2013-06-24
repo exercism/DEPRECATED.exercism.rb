@@ -1,6 +1,6 @@
 require './test/test_helper'
 
-class AssignmentTest < MiniTest::Unit::TestCase
+class AssignmentTest < Minitest::Test
 
   def project_dir
     '/tmp'

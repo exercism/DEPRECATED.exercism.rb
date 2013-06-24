@@ -14,7 +14,7 @@ Approvals.configure do |c|
   c.approvals_path = File.join(test_dir, 'approvals') + '/'
 end
 
-class ApiTest < MiniTest::Unit::TestCase
+class ApiTest < Minitest::Test
 
   def project_dir
     '/tmp'
