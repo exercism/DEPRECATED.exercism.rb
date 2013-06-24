@@ -19,7 +19,7 @@ class AssignmentTest < MiniTest::Unit::TestCase
   end
 
   def tests_path
-    File.join(tests_dir, 'test.rb')
+    File.join(tests_dir, 'queens_test.rb')
   end
 
   def assignment_data
@@ -27,7 +27,7 @@ class AssignmentTest < MiniTest::Unit::TestCase
       'track' => 'ruby',
       'slug' => 'queens',
       'readme' => 'Do it',
-      'test_file' => 'test.rb',
+      'test_file' => 'queens_test.rb',
       'tests' => 'assert true',
       'project_dir' => project_dir
     }
