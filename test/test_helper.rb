@@ -3,7 +3,7 @@ $:.unshift File.expand_path("../../test", __FILE__)
 
 ENV['EXERCISM_ENV'] = 'test'
 
-require 'minitest/autorun'
+gem 'minitest'; require 'minitest/autorun'
 require 'minitest/pride'
 
 require 'exercism'
