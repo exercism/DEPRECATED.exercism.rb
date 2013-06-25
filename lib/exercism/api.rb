@@ -11,13 +11,13 @@ class Exercism
     def conn
      conn = Faraday.new(:url => url) do |c|
         c.use Faraday::Adapter::NetHttp
+        c.headers['User-Agent'] = user_agent
       end
     end
 
     def fetch
       response = conn.get do |req|
         req.url endpoint('current')
-        req.headers['User-Agent'] = user_agent
         req.params['key'] = user.key
       end
       save response.body
@@ -26,7 +26,6 @@ class Exercism
     def peek
       response = conn.get do |req|
         req.url endpoint('next')
-        req.headers['User-Agent'] = user_agent
         req.params['key'] = user.key
       end
       save response.body
@@ -39,7 +38,6 @@ class Exercism
         req.url endpoint
         req.headers['Accept'] = 'application/json'
         req.headers['Content-Type'] = 'application/json'
-        req.headers['User-Agent'] = user_agent
         req.body = {code: contents, key: user.key, path: path}.to_json
       end
       response
