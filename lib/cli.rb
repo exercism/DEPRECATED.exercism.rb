@@ -51,9 +51,10 @@ class Exercism
 
       path = File.join(FileUtils.pwd, file)
       begin
-        Exercism::Api.new(options[:host], Exercism.user).submit(file)
+        response = Exercism::Api.new(options[:host], Exercism.user).submit(file)
         puts "Your assignment has been submitted."
-        puts "Check the website for feedback in a bit."
+        url = submission_url(response.body, options[:host])
+        puts "For feedback on your submission visit #{url}."
       rescue Exception => e
         puts "There was an issue with your submission."
         puts e.message
@@ -91,6 +92,12 @@ class Exercism
       puts Exercism.user.github_username
     rescue Errno::ENOENT
       puts "You are not logged in."
+    end
+
+private
+    def submission_url(response_body, host)
+      body = JSON.parse(response_body)
+      "#{host}/user/#{body['language']}/#{body['exercise']}" 
     end
 
   end
