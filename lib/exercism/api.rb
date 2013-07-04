@@ -46,7 +46,7 @@ class Exercism
     private
 
     def user_agent
-      "exercism-CLI v#{Exercism::VERSION}"
+      "github.com/kytrinyx/exercism CLI v#{Exercism::VERSION}"
     end
 
     def endpoint(action = nil)
