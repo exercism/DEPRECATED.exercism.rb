@@ -16,19 +16,11 @@ class Exercism
     end
 
     def fetch
-      response = conn.get do |req|
-        req.url endpoint('current')
-        req.params['key'] = user.key
-      end
-      save response.body
+      get_and_save('current')
     end
 
     def peek
-      response = conn.get do |req|
-        req.url endpoint('next')
-        req.params['key'] = user.key
-      end
-      save response.body
+      get_and_save('next')
     end
 
     def submit(filename)
@@ -44,6 +36,14 @@ class Exercism
     end
 
     private
+
+    def get_and_save(action)
+      response = conn.get do |req|
+        req.url endpoint(action)
+        req.params['key'] = user.key
+      end
+      save response.body
+    end
 
     def user_agent
       "github.com/kytrinyx/exercism CLI v#{Exercism::VERSION}"

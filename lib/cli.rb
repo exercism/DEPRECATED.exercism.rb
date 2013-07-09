@@ -19,13 +19,7 @@ class Exercism
 
       api = Exercism::Api.new(options[:host], Exercism.user, Exercism.project_dir)
       assignments = api.fetch
-      if assignments.empty?
-        puts "No assignments fetched."
-      else
-        assignments.each do |assignment|
-          puts "Fetched #{File.join(assignment.assignment_dir)}"
-        end
-      end
+      report(assignments)
     end
 
     desc "peek", "Fetch upcoming assignment from exercism.io"
@@ -35,13 +29,7 @@ class Exercism
 
       api = Exercism::Api.new(options[:host], Exercism.user, Exercism.project_dir)
       assignments = api.peek
-      if assignments.empty?
-        puts "No assignments fetched."
-      else
-        assignments.each do |assignment|
-          puts "Fetched #{File.join(assignment.assignment_dir)}"
-        end
-      end
+      report(assignments)
     end
 
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
@@ -98,6 +86,16 @@ private
     def submission_url(response_body, host)
       body = JSON.parse(response_body)
       "#{host}/user/#{body['language']}/#{body['exercise']}" 
+    end
+
+    def report(assignments)
+      if assignments.empty?
+        puts "No assignments fetched."
+      else
+        assignments.each do |assignment|
+          puts "Fetched #{File.join(assignment.assignment_dir)}"
+        end
+      end
     end
 
   end
