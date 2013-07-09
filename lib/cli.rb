@@ -17,7 +17,6 @@ class Exercism
     def fetch
       require 'exercism'
 
-      api = Exercism::Api.new(options[:host], Exercism.user, Exercism.project_dir)
       assignments = api.fetch
       report(assignments)
     end
@@ -27,7 +26,6 @@ class Exercism
     def peek
       require 'exercism'
 
-      api = Exercism::Api.new(options[:host], Exercism.user, Exercism.project_dir)
       assignments = api.peek
       report(assignments)
     end
@@ -83,6 +81,10 @@ class Exercism
     end
 
 private
+    def api(host = options[:host])
+      Exercism::Api.new(host, Exercism.user, Exercism.project_dir)
+    end
+
     def submission_url(response_body, host)
       body = JSON.parse(response_body)
       "#{host}/user/#{body['language']}/#{body['exercise']}" 
