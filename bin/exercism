@@ -7,6 +7,9 @@ require 'cli'
 begin
   Exercism::CLI.start
 rescue Exception => e
-  print "\nERROR: Something went wrong. Exiting.\n"
+  puts
+  puts "ERROR: Something went wrong. Exiting."
+  puts e.message
+  puts
   raise e if ENV['EXERCISM_ENV'] =~ /test|development/
 end
