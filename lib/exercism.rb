@@ -12,7 +12,11 @@ require 'exercism/api'
 class Exercism
 
   def self.home
-    Dir.home(Etc.getlogin)
+    if ENV["OS"] == 'Windows_NT' then
+      ENV["HOMEDRIVE"]+ENV["HOMEPATH"]
+    else
+      Dir.home(Etc.getlogin)
+    end
   end
 
   def self.login(github_username, key, dir)
