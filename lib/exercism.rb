@@ -4,6 +4,7 @@ require 'yaml'
 require 'fileutils'
 require 'faraday'
 require 'exercism/version'
+require 'exercism/env'
 require 'exercism/config'
 require 'exercism/user'
 require 'exercism/assignment'
@@ -11,12 +12,12 @@ require 'exercism/api'
 
 class Exercism
 
+  class << self
+    attr_writer :home
+  end
+
   def self.home
-    if ENV["OS"] == 'Windows_NT' then
-      ENV["HOMEDRIVE"]+ENV["HOMEPATH"]
-    else
-      Dir.home(Etc.getlogin)
-    end
+    @home ||= Env.home
   end
 
   def self.login(github_username, key, dir)
@@ -42,4 +43,7 @@ class Exercism
     config.project_dir
   end
 
+  def self.alternate_config_path
+    Config.alternate_path
+  end
 end

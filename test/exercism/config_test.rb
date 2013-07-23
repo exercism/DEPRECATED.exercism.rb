@@ -6,13 +6,29 @@ class ConfigTest < Minitest::Test
     './test/fixtures'
   end
 
+  def data
+    { 
+      'github_username' => 'bob', 
+      'key' => '7a7096c',
+      'project_dir' => '/tmp'
+    }
+  end
+
   def key
-    '7a7096c'
+    data['key']
+  end
+
+  def write_config_file(path, info = {})
+    Exercism::Config.write(path, data.merge!(info))
   end
 
   def teardown
     if File.exists?('./test/fixtures/.exercism')
       FileUtils.rm('./test/fixtures/.exercism')
+    end
+
+    if File.exists?('./test/fixtures/.config/exercism')
+      FileUtils.rm_r('./test/fixtures/.config')
     end
 
     if File.exists?('./test/fixtures/some/project/dir')
@@ -27,39 +43,34 @@ class ConfigTest < Minitest::Test
     assert_equal '/tmp', config.project_dir
   end
 
+  def test_reads_from_alternate_path_config_file_when_config_file_in_default_path_is_missing
+    write_config_file('./test/fixtures/.config')
+    Exercism::Config.stub(:alternate_path, './test/fixtures/.config') do
+      config = Exercism::Config.read(path)
+      assert_equal 'bob', config.github_username
+      assert_equal key, config.key
+      assert_equal '/tmp', config.project_dir  
+    end
+  end
+
   def test_write_config_file
-    data = {
-      'github_username' => 'bob',
-      'key' => key,
-      'project_dir' => '/tmp'
-    }
-    config = Exercism::Config.write(path, data)
+    config = write_config_file(path)
     assert_equal 'bob', config.github_username
     assert_equal key, config.key
     assert_equal '/tmp', config.project_dir
   end
 
   def test_delete_config_file
-    data = {
-      'github_username' => 'bob',
-      'key' => key,
-      'project_dir' => '/tmp'
-    }
-    config = Exercism::Config.write(path, data)
+    config = write_config_file(path)
     filename = config.file
     config.delete
     assert !File.exists?(filename)
   end
 
   def test_write_directory_if_missing
-    project_dir = './test/fixtures/some/project/dir'
-    data = {
-      'github_username' => 'bob',
-      'key' => key,
-      'project_dir' => project_dir
-    }
-    Exercism::Config.write(path, data)
-    assert File.exist? project_dir
+    data = {'project_dir' => './test/fixtures/some/project/dir'}
+    write_config_file(path, data)
+    assert File.exist?(data['project_dir'])
   end
 
 end
