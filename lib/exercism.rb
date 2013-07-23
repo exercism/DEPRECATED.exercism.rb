@@ -12,12 +12,17 @@ ensure
 end
 
 require 'exercism/version'
+require 'exercism/env'
 require 'exercism/config'
 require 'exercism/user'
 require 'exercism/assignment'
 require 'exercism/api'
 
 class Exercism
+
+  class << self
+    attr_writer :home
+  end
 
   def self.home
     if ENV["OS"] == 'Windows_NT' then
@@ -51,4 +56,7 @@ class Exercism
     config.project_dir
   end
 
+  def self.alternate_config_path
+    Config.alternate_path
+  end
 end

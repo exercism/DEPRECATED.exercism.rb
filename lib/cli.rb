@@ -77,6 +77,13 @@ class Exercism
         path = default_path
       end
       path = File.expand_path(path)
+
+      puts "Where do you want your configuration stored?"
+      puts "1. #{Exercism.home} (default)"
+      puts "2. #{Exercism.alternate_config_path}"
+
+      which = ask(" ")
+      Exercism.home = Exercism.alternate_config_path if which.to_i == 2
       Exercism.login(username, key, path)
 
       say("Your credentials have been written to #{Exercism.config.file}")
