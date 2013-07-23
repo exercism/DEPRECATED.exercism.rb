@@ -1,8 +1,14 @@
 class Exercism
   class Config
 
+    def self.alternate_path
+      File.join(Env.home, '.config', 'exercism')
+    end
+
     def self.read(path)
-      new(path)
+      config = new(path)
+      config = new(alternate_path) unless config.exists?
+      config
     end
 
     def self.write(path, data)
@@ -13,11 +19,16 @@ class Exercism
       config.save
     end
 
-    attr_reader :file
+    attr_reader :file, :path
     attr_writer :github_username, :key, :project_dir
 
     def initialize(path)
+      @path = path
       @file = File.join(path, '.exercism')
+    end
+
+    def exists?
+      File.exists?(@file)
     end
 
     def github_username
@@ -34,6 +45,8 @@ class Exercism
 
     def save
       FileUtils.mkdir_p(project_dir)
+      FileUtils.mkdir_p(path)
+
       File.open file, 'w' do |f|
         data = {
           'github_username' => github_username,
