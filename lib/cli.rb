@@ -78,7 +78,7 @@ class Exercism
       end
       path = File.expand_path(path)
 
-      puts "Where do you want your configuration stored?"
+      puts "Where do you want your configuration stored? (type a number)"
       puts "1. #{Exercism.home} (default)"
       puts "2. #{Exercism.alternate_config_path}"
 
