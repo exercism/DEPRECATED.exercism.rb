@@ -55,7 +55,7 @@ class Exercism
         response = Exercism::Api.new(options[:host], Exercism.user).submit(file)
         puts "Your assignment has been submitted."
         url = submission_url(response.body, options[:host])
-        puts "For feedback on your submission visit #{url}."
+        puts "For feedback on your submission visit #{url}"
       rescue Exception => e
         puts "There was an issue with your submission."
         puts e.message
