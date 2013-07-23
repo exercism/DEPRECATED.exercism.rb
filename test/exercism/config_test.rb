@@ -27,7 +27,7 @@ class ConfigTest < Minitest::Test
       FileUtils.rm('./test/fixtures/.exercism')
     end
 
-    if File.exists?('./test/fixtures/.config/exercism/.exercism')
+    if File.exists?('./test/fixtures/.config/exercism')
       FileUtils.rm_r('./test/fixtures/.config')
     end
 
@@ -43,10 +43,10 @@ class ConfigTest < Minitest::Test
     assert_equal '/tmp', config.project_dir
   end
 
-  def test_reads_from_alternate_path_config_file_when_in_default_path_is_missing
-    write_config_file('./test/fixtures/.config/exercism')
-    Exercism::Config.stub(:alternate_path, './test/fixtures/.config/exercism') do
-      config = Exercism::Config.read('./test/fixtures/some/path/with/no/config/file')
+  def test_reads_from_alternate_path_config_file_when_config_file_in_default_path_is_missing
+    write_config_file('./test/fixtures/.config')
+    Exercism::Config.stub(:alternate_path, './test/fixtures/.config') do
+      config = Exercism::Config.read(path)
       assert_equal 'bob', config.github_username
       assert_equal key, config.key
       assert_equal '/tmp', config.project_dir  
