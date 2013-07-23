@@ -12,6 +12,21 @@ class Exercism
 
     map "-v" => "version", "--version" => "version"
 
+    desc "demo", "Fetch first assignment for each language from exercism.io"
+    method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
+    def demo
+      require 'exercism'
+
+      guest = Object.new
+      def guest.key
+        "demo"
+      end
+
+      exercism = Exercism::Api.new(options[:host], guest, '.')
+      assignments = exercism.demo
+      report(assignments)
+    end
+
     desc "fetch", "Fetch current assignment from exercism.io"
     method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
     def fetch

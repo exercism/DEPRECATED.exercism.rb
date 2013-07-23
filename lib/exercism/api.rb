@@ -15,19 +15,23 @@ class Exercism
       end
     end
 
+    def demo
+      get_and_save('assignments/demo')
+    end
+
     def fetch
-      get_and_save('current')
+      get_and_save('user/assignments/current')
     end
 
     def peek
-      get_and_save('next')
+      get_and_save('user/assignments/next')
     end
 
     def submit(filename)
       path = File.join(filename)
       contents = File.read path
       response = conn.post do |req|
-        req.url endpoint
+        req.url endpoint('user/assignments')
         req.headers['Accept'] = 'application/json'
         req.headers['Content-Type'] = 'application/json'
         req.body = {code: contents, key: user.key, path: path}.to_json
@@ -50,7 +54,7 @@ class Exercism
     end
 
     def endpoint(action = nil)
-      "/api/v1/user/assignments/#{action}".chomp('/')
+      "/api/v1/#{action}".chomp('/')
     end
 
     def save(body)
