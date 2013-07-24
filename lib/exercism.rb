@@ -1,5 +1,14 @@
 require 'etc'
-require 'json'
+
+require 'json' if RUBY_VERSION == '1.8.7'
+ 
+old_warn, $-w = $-w, nil
+begin
+  require 'faraday'
+ensure
+  $-w = old_warn
+end
+
 require 'yaml'
 require 'fileutils'
 require 'faraday'
