@@ -38,8 +38,8 @@ class ApiTest < Minitest::Test
       VCR.use_cassette('alice-gets-bob') do
         Exercism::Api.new('http://localhost:4567', Exercism.user, project_dir).fetch
 
-        Approvals.verify(File.read(readme_path), name: 'alice_gets_bob_readme')
-        Approvals.verify(File.read(tests_path), name: 'alice_gets_bob_tests')
+        Approvals.verify(File.read(readme_path), :name => 'alice_gets_bob_readme', :format => :txt)
+        Approvals.verify(File.read(tests_path), :name => 'alice_gets_bob_tests', :format => :txt)
       end
     end
   end
@@ -53,8 +53,8 @@ class ApiTest < Minitest::Test
       VCR.use_cassette('alice-gets-word-count') do
         Exercism::Api.new('http://localhost:4567', Exercism.user, project_dir).peek
 
-        Approvals.verify(File.read(readme_path), name: 'alice_gets_word_count_readme')
-        Approvals.verify(File.read(tests_path), name: 'alice_gets_word_count_tests')
+        Approvals.verify(File.read(readme_path), :name => 'alice_gets_word_count_readme', :format => :txt)
+        Approvals.verify(File.read(tests_path), :name => 'alice_gets_word_count_tests', :format => :txt)
       end
     end
   end

@@ -1,3 +1,4 @@
+require 'rubygems' if RUBY_VERSION <= "1.8.7"
 require 'thor'
 
 class Exercism
@@ -13,7 +14,7 @@ class Exercism
     map "-v" => "version", "--version" => "version"
 
     desc "demo", "Fetch first assignment for each language from exercism.io"
-    method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
+    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def demo
       require 'exercism'
 
@@ -28,7 +29,7 @@ class Exercism
     end
 
     desc "fetch", "Fetch current assignment from exercism.io"
-    method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
+    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def fetch
       require 'exercism'
 
@@ -37,7 +38,7 @@ class Exercism
     end
 
     desc "peek", "Fetch upcoming assignment from exercism.io"
-    method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
+    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def peek
       require 'exercism'
 
@@ -46,7 +47,7 @@ class Exercism
     end
 
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
-    method_option :host, aliases: '-h', default: 'http://exercism.io', desc: 'the url of the exercism application'
+    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def submit(file)
       require 'exercism'
 
