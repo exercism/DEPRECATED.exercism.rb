@@ -34,7 +34,7 @@ class Exercism
         req.url endpoint('user/assignments')
         req.headers['Accept'] = 'application/json'
         req.headers['Content-Type'] = 'application/json'
-        req.body = {code: contents, key: user.key, path: path}.to_json
+        req.body = {:code =>  contents, :key => user.key, :path => path}.to_json
       end
       response
     end
@@ -56,7 +56,7 @@ class Exercism
     def endpoint(action = nil)
       "/api/v1/#{action}".chomp('/')
     end
-
+   
     def save(body)
       Assignment.save(JSON.parse(body), project_dir)
     end
