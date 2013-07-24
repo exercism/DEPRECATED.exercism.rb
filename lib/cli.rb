@@ -60,7 +60,7 @@ class Exercism
       rescue Exception => e
         puts "There was an issue with your submission."
         puts e.message
-      end
+      end if confirms_submission?
     end
 
     desc "login", "Save exercism.io api credentials"
@@ -114,6 +114,11 @@ private
           puts "Fetched #{File.join(assignment.assignment_dir)}"
         end
       end
+    end
+
+    def confirms_submission?
+      confirm = ask("Are you SURE you want to submit? (anything other than 'y' or 'yes' will cancel)")
+      confirm == 'y' || confirm == 'yes'
     end
 
   end
