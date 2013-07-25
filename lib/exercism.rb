@@ -3,7 +3,14 @@ require 'etc'
 require 'json'
 require 'yaml'
 require 'fileutils'
-require 'faraday'
+
+old_warn, $-w = $-w, nil
+begin
+  require 'faraday'
+ensure
+  $-w = old_warn
+end
+
 require 'exercism/version'
 require 'exercism/config'
 require 'exercism/user'
