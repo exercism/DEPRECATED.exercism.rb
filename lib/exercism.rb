@@ -25,12 +25,7 @@ class Exercism
   end
 
   def self.home
-    if ENV["OS"] == 'Windows_NT' then
-      ENV["HOMEDRIVE"]+ENV["HOMEPATH"]
-    else
-      return File.expand_path('~') if RUBY_VERSION <= "1.8.7"
-      Dir.home(Etc.getlogin)
-    end
+    @home ||= Env.home
   end
 
   def self.login(github_username, key, dir)
@@ -41,10 +36,6 @@ class Exercism
     }
     Config.write(home, data)
     User.new(github_username, key)
-  end
-
-  def self.config
-    Config.read(home)
   end
 
   def self.user
@@ -58,5 +49,9 @@ class Exercism
 
   def self.alternate_config_path
     Config.alternate_path
+  end
+
+  def self.config
+    Config.read(home)
   end
 end
