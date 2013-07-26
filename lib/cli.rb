@@ -1,3 +1,4 @@
+require 'rubygems' if RUBY_VERSION == '1.8.7'
 require 'thor'
 
 class Exercism
@@ -45,23 +46,40 @@ class Exercism
       report(assignments)
     end
 
+    attr_reader :assignment_to_upload
+    attr_reader :confirmation_answer
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def submit(file)
       require 'exercism'
-
-      path = File.join(FileUtils.pwd, file)
+      require 'exercism/assignment_submission'
+      
+      @assignment_to_upload = file
+      assignment_submission
+    end
  
-      if confirms_submission?
-        begin
-          response = Exercism::Api.new(options[:host], Exercism.user).submit(file)
-          puts "Your assignment has been submitted."
-          url = submission_url(response.body, options[:host])
-          puts "For feedback on your submission visit #{url}"
-        rescue Exception => e
-          puts "There was an issue with your submission."
-          puts e.message
-        end
+    no_commands do
+      def assignment_submission
+        @assignment_submission ||= AssignmentSubmission.new(self).submit!
+      end
+
+      def retry_another_file
+        @assignment_to_upload = ask("You are trying to upload the test file. Try another or type 'q' to quit:")
+      end
+ 
+      def confirm_submission
+        @confirmation_answer = ask("Are you SURE you want to submit? (anything other than 'y' or 'yes' will cancel)")
+      end
+
+      def submission_succeeded
+        say "Your assignment has been submitted."
+        url = submission_url(assignment_submission.body, options[:host])
+        say "For feedback on your submission visit #{url}"
+      end
+
+      def submission_failed(message)
+        say "There was an issue with your submission."    
+        puts message
       end
     end
 
@@ -123,11 +141,6 @@ private
           puts "Fetched #{File.join(assignment.assignment_dir)}"
         end
       end
-    end
-
-    def confirms_submission?
-      confirm = ask("Are you SURE you want to submit? (anything other than 'y' or 'yes' will cancel)")
-      confirm == 'y' || confirm == 'yes'
     end
   end
 end
