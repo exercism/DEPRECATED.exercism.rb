@@ -24,15 +24,6 @@ class Exercism
     attr_writer :home
   end
 
-  def self.home
-    if ENV["OS"] == 'Windows_NT' then
-      ENV["HOMEDRIVE"]+ENV["HOMEPATH"]
-    else
-      return File.expand_path('~') if RUBY_VERSION <= "1.8.7"
-      Dir.home(Etc.getlogin)
-    end
-  end
-
   def self.login(github_username, key, dir)
     data = {
       'github_username' => github_username,
@@ -43,20 +34,25 @@ class Exercism
     User.new(github_username, key)
   end
 
-  def self.config
-    Config.read(home)
-  end
-
   def self.user
     c = config
     User.new(c.github_username, c.key)
+  end
+
+  def self.home
+    @home ||= Env.home
+  end
+
+  def self.alternate_config_path
+    Config.alternate_path
   end
 
   def self.project_dir
     config.project_dir
   end
 
-  def self.alternate_config_path
-    Config.alternate_path
+  def self.config
+    Config.read(home)
   end
+
 end
