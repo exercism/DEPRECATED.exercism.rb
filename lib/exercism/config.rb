@@ -1,6 +1,5 @@
 class Exercism
   class Config
-    FILE = 'exercism'
 
     def self.alternate_path
       File.join(Env.home, '.config')
@@ -8,8 +7,9 @@ class Exercism
 
     def self.read(path)
       config = new(path)
-      config = new(alternate_path) unless config.exists?
-      config
+      return config if config.exists?
+
+      new(alternate_path) unless config.exists?
     end
 
     def self.write(path, data)
@@ -20,12 +20,11 @@ class Exercism
       config.save
     end
 
-    attr_reader :file, :path
+    attr_reader :path
     attr_writer :github_username, :key, :project_dir
 
     def initialize(path)
       @path = path
-      set_file      
     end
 
     def github_username
@@ -60,18 +59,21 @@ class Exercism
     end
 
     def exists?
-      File.exists?(@file)
+      File.exists?(file)
+    end
+
+    def file
+      @file ||= File.join(path, filename)
     end
 
     private
-    
-    def set_file
-      filename = ('.' if is_default?) + FILE
-      @file = File.join(@path, filename)
+
+    def filename
+      default? ? ".exercism" : "exercism"
     end
 
-    def is_default?
-      @path != /\.config/
+    def default?
+      path !~ /\.config/
     end
 
     def from_yaml

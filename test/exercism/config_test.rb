@@ -7,8 +7,8 @@ class ConfigTest < Minitest::Test
   end
 
   def data
-    { 
-      'github_username' => 'bob', 
+    {
+      'github_username' => 'bob',
       'key' => '7a7096c',
       'project_dir' => '/tmp'
     }
@@ -43,13 +43,13 @@ class ConfigTest < Minitest::Test
     assert_equal '/tmp', config.project_dir
   end
 
-  def test_reads_from_alternate_path_config_file_when_config_file_in_default_path_is_missing
+  def test_reads_from_alternate_path_config_file_when_default_is_missing
     write_config_file('./test/fixtures/.config')
     Exercism::Config.stub(:alternate_path, './test/fixtures/.config') do
       config = Exercism::Config.read(path)
       assert_equal 'bob', config.github_username
       assert_equal key, config.key
-      assert_equal '/tmp', config.project_dir  
+      assert_equal '/tmp', config.project_dir
     end
   end
 
