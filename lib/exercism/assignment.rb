@@ -3,7 +3,7 @@ class Exercism
 
     def self.save(data, path)
       data['assignments'].map do |attributes|
-        Assignment.new(attributes.merge('project_dir' => path)).save
+        new(attributes.merge('project_dir' => path)).save
       end
     end
 
