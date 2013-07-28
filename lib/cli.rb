@@ -80,20 +80,24 @@ class Exercism
 
       username = ask("Your GitHub username:")
       key = ask("Your exercism.io API key:")
-      default_path = FileUtils.pwd
-      path = ask("What is your exercism exercises project path? (#{default_path})")
-      if path.empty?
-        path = default_path
+      default_dir = FileUtils.pwd
+      say "What is your exercism exercises project path?"
+      say "Press Enter to select the default (#{default_dir}):\n"
+      dir = ask ">"
+      if dir.empty?
+        dir = default_dir
       end
-      path = File.expand_path(path)
+      project_dir = File.expand_path(dir)
 
-      puts "Where do you want your configuration stored? (type a number)"
-      puts "1. #{Exercism.home} (default)"
-      puts "2. #{Exercism.alternate_config_path}"
+      say "Where do you want your configuration stored? (type a number)"
+      say "1. #{File.join(Exercism.home, '.exercism')}"
+      say "2. #{File.join(Exercism.home, '.config', 'exercism')}"
 
-      which = ask(" ")
-      Exercism.home = Exercism.alternate_config_path if which.to_i == 2
-      Exercism.login(username, key, path)
+      if ask(">").to_i == 2
+        Exercism.login username, key, project_dir, File.join(Exercism.home, '.config')
+      else
+        Exercism.login username, key, project_dir, Exercism.home
+      end
 
       say("Your credentials have been written to #{Exercism.config.file}")
     end

@@ -20,22 +20,17 @@ require 'exercism/api'
 
 class Exercism
 
-  class << self
-    attr_writer :home
-  end
-
   def self.home
     @home ||= Env.home
   end
 
-  def self.login(github_username, key, dir)
+  def self.login(github_username, key, dir, config_path)
     data = {
       'github_username' => github_username,
       'key' => key,
       'project_dir' => dir
     }
-    Config.write(home, data)
-    User.new(github_username, key)
+    Config.write(config_path, data)
   end
 
   def self.user
