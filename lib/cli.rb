@@ -1,3 +1,4 @@
+require 'rubygems' if RUBY_VERSION == '1.8.7'
 require 'thor'
 
 class Exercism
@@ -49,12 +50,20 @@ class Exercism
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def submit(file)
       require 'exercism'
+      require 'exercism/submission'
 
-      path = File.join(FileUtils.pwd, file)
+      submission = Submission.new(file)
+
+      if submission.test?
+        answer = ask("It looks like this is a test, you probably don't want to do that. Do you want to submit it anyway? [y/n]")
+        return if no?(answer)
+      end 
  
-      if confirms_submission?
+      if confirm_submission?
+        path = File.join(FileUtils.pwd, submission.file)
+
         begin
-          response = Exercism::Api.new(options[:host], Exercism.user).submit(file)
+          response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.file)
           puts "Your assignment has been submitted."
           url = submission_url(response.body, options[:host])
           puts "For feedback on your submission visit #{url}"
@@ -125,9 +134,18 @@ private
       end
     end
 
-    def confirms_submission?
-      confirm = ask("Are you SURE you want to submit? (anything other than 'y' or 'yes' will cancel)")
-      confirm == 'y' || confirm == 'yes'
+    def yes?(answer = '')
+      answer == 'yes' || answer == 'y'
     end
+
+    def no?(answer = '')
+      answer == 'no' || answer == 'n'
+    end
+
+    def confirm_submission?
+      answer = ask("Are you SURE you want to submit? (anything other than 'y' or 'yes' will cancel)")
+      yes?(answer)
+    end
+
   end
 end
