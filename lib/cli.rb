@@ -50,27 +50,26 @@ class Exercism
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def submit(file)
       require 'exercism'
-      require 'exercism/submission'
 
       submission = Submission.new(file)
 
       if submission.test?
-        answer = ask("It looks like this is a test, you probably don't want to do that. Do you want to submit it anyway? [y/n]")
-        return if no?(answer)
-      end 
- 
-      if confirm_submission?
-        path = File.join(FileUtils.pwd, submission.file)
-
-        begin
-          response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.file)
-          puts "Your assignment has been submitted."
-          url = submission_url(response.body, options[:host])
-          puts "For feedback on your submission visit #{url}"
-        rescue Exception => e
-          puts "There was an issue with your submission."
-          puts e.message
+        say "It looks like this is a test, you probably don't want to do that."
+        if no?("Do you want to submit it anyway? [y/n]")
+          return
         end
+      end
+
+      begin
+        response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.file)
+        say "Your assignment has been submitted."
+
+        body = JSON.parse(response.body)
+        url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
+        say "For feedback on your submission visit #{url}"
+      rescue Exception => e
+        puts "There was an issue with your submission."
+        puts e.message
       end
     end
 
@@ -118,14 +117,10 @@ class Exercism
       puts "You are not logged in."
     end
 
-private
+    private
+
     def api(host = options[:host])
       Exercism::Api.new(host, Exercism.user, Exercism.project_dir)
-    end
-
-    def submission_url(response_body, host)
-      body = JSON.parse(response_body)
-      "#{host}/user/#{body['language']}/#{body['exercise']}" 
     end
 
     def report(assignments)
@@ -136,19 +131,6 @@ private
           puts "Fetched #{File.join(assignment.assignment_dir)}"
         end
       end
-    end
-
-    def yes?(answer = '')
-      answer == 'yes' || answer == 'y'
-    end
-
-    def no?(answer = '')
-      answer == 'no' || answer == 'n'
-    end
-
-    def confirm_submission?
-      answer = ask("Are you SURE you want to submit? (anything other than 'y' or 'yes' will cancel)")
-      yes?(answer)
     end
 
   end

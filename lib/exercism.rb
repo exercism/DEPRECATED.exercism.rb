@@ -16,6 +16,7 @@ require 'exercism/env'
 require 'exercism/config'
 require 'exercism/user'
 require 'exercism/assignment'
+require 'exercism/submission'
 require 'exercism/api'
 
 class Exercism
