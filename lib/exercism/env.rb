@@ -1,12 +1,21 @@
 class Exercism
   class Env
     def self.home
-      if ENV["OS"] == 'Windows_NT' then
-        ENV["HOMEDRIVE"]+ENV["HOMEPATH"]
+      if windows_nt?
+        ENV["HOMEDRIVE"] + ENV["HOMEPATH"]
+      elsif ruby18?
+        File.expand_path('~')
       else
-        return File.expand_path('~') if RUBY_VERSION == '1.8.7'
         Dir.home(Etc.getlogin)
       end
+    end
+
+    def self.windows_nt?
+      ENV["OS"] == 'Windows_NT'
+    end
+
+    def self.ruby18?
+      RUBY_VERSION == '1.8.7'
     end
   end
 end
