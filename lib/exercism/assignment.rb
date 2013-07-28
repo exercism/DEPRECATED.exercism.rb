@@ -18,6 +18,10 @@ class Exercism
       @project_dir = attributes['project_dir']
     end
 
+    def exercise
+      File.join(track, slug)
+    end
+
     def save
       FileUtils.mkdir_p assignment_dir
       save_readme

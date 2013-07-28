@@ -125,10 +125,12 @@ class Exercism
 
     def report(assignments)
       if assignments.empty?
-        puts "No assignments fetched."
+        say "No assignments fetched."
       else
         assignments.each do |assignment|
-          puts "Fetched #{File.join(assignment.assignment_dir)}"
+          say "\nFetched #{assignment.exercise}"
+          say File.join(assignment.exercise, 'README.md')
+          say File.join(assignment.exercise, assignment.test_file)
         end
       end
     end
