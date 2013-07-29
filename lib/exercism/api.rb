@@ -56,7 +56,7 @@ class Exercism
     def endpoint(action = nil)
       "/api/v1/#{action}".chomp('/')
     end
-   
+
     def save(body)
       Assignment.save(JSON.parse(body), project_dir)
     end
