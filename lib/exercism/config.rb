@@ -1,3 +1,5 @@
+require 'yaml/store'
+
 class Exercism
   class Config
 
@@ -40,15 +42,7 @@ class Exercism
     def save
       FileUtils.mkdir_p(project_dir)
       FileUtils.mkdir_p(path)
-
-      File.open file, 'w' do |f|
-        data = {
-          'github_username' => github_username,
-          'key' => key,
-          'project_dir' => project_dir
-        }
-        f.write data.to_yaml
-      end
+      save_to_file
       self
     end
 
@@ -66,6 +60,24 @@ class Exercism
 
     private
 
+    def save_to_file
+      data = {
+        'github_username' => github_username,
+        'key' => key,
+        'project_dir' => project_dir
+      }
+
+      store.transaction do
+        data.each_pair do |k,v|
+          store[k] = v
+        end
+      end
+    end
+
+    def store
+      @store ||= YAML::Store.new(file)
+    end
+
     def filename
       default? ? ".exercism" : "exercism"
     end
@@ -75,12 +87,10 @@ class Exercism
     end
 
     def from_yaml
-      unless @data
-         @data = YAML.load(File.read(file))
-         unless @data
-           raise StandardError.new "Cannot read #{file}"
-         end
-      end
+       @data ||= store.load(File.read(file))
+       unless @data
+         raise StandardError.new "Cannot read #{file}"
+       end
       @data
     end
 
