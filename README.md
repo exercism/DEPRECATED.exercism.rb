@@ -29,6 +29,8 @@ This submits `example.rb` on your current assignment.
 
 Reveals stack traces on errors.
 
+By default, Exercism will create a config file in the base of your home directory, i.e. `~/.exercism`. This file can be moved to `~/.config/exercism` if desired.
+
 ## Contributing
 
 1. Fork it
