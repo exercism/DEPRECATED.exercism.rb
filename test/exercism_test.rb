@@ -21,7 +21,7 @@ class ExercismTest < Minitest::Test
     home = './test/fixtures'
     Exercism.stub(:home, home) do
       key = '97e9975'
-      Exercism.login('bob', key, '/tmp', home)
+      Exercism.login('bob', key, '/tmp')
       user = Exercism.user
       assert_equal 'bob', user.github_username
       assert_equal key, user.key

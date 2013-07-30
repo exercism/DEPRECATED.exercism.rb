@@ -25,13 +25,13 @@ class Exercism
     @home ||= Env.home
   end
 
-  def self.login(github_username, key, dir, config_path)
+  def self.login(github_username, key, dir)
     data = {
       'github_username' => github_username,
       'key' => key,
       'project_dir' => dir
     }
-    Config.write(config_path, data)
+    Config.write home, data
   end
 
   def self.user
