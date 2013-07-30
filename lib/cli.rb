@@ -77,26 +77,7 @@ class Exercism
     def login
       require 'exercism'
 
-      username = ask("Your GitHub username:")
-      key = ask("Your exercism.io API key:")
-      default_dir = FileUtils.pwd
-      say "What is your exercism exercises project path?"
-      say "Press Enter to select the default (#{default_dir}):\n"
-      dir = ask ">"
-      if dir.empty?
-        dir = default_dir
-      end
-      project_dir = File.expand_path(dir)
-
-      say "Where do you want your configuration stored? (type a number)"
-      say "1. #{File.join(Exercism.home, '.exercism')}"
-      say "2. #{File.join(Exercism.home, '.config', 'exercism')}"
-
-      if ask(">").to_i == 2
-        Exercism.login username, key, project_dir, File.join(Exercism.home, '.config')
-      else
-        Exercism.login username, key, project_dir, Exercism.home
-      end
+      Exercism.login username, key, project_dir
 
       say("Your credentials have been written to #{Exercism.config.file}")
     end
@@ -118,6 +99,22 @@ class Exercism
     end
 
     private
+
+    def username
+      ask("Your GitHub username:")
+    end
+
+    def key
+      ask("Your exercism.io API key:")
+    end
+
+    def project_dir
+      default_dir = FileUtils.pwd
+      say "What is your exercism exercises project path?"
+      say "Press Enter to select the default (#{default_dir}):\n"
+      dir = ask ">", :default => default_dir
+      File.expand_path(dir)
+    end
 
     def api(host = options[:host])
       Exercism::Api.new(host, Exercism.user, Exercism.project_dir)
