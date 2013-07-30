@@ -7,9 +7,7 @@ class Exercism
 
     def self.read(path)
       config = new(path)
-      return config if config.exists?
-
-      new(alternate_path) unless config.exists?
+      config.exists? ? config : new(alternate_path)
     end
 
     def self.write(path, data)
