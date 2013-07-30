@@ -3,7 +3,7 @@ class Exercism
     def self.home
       if windows_nt?
         ENV["HOMEDRIVE"] + ENV["HOMEPATH"]
-      elsif ruby18?
+      elsif ruby18? || ruby191?
         File.expand_path('~')
       else
         Dir.home(Etc.getlogin)
@@ -16,6 +16,10 @@ class Exercism
 
     def self.ruby18?
       RUBY_VERSION == '1.8.7'
+    end
+    
+    def self.ruby191?
+      RUBY_VERSION == '1.9.1'  
     end
   end
 end
