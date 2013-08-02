@@ -1,3 +1,5 @@
+require 'faraday/adapter/net_http'
+
 class Exercism
   class Api
 
