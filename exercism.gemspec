@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "json"
-  spec.add_dependency "faraday"
+  spec.add_dependency "faraday", ">= 0.8.8"
   spec.add_dependency "thor"
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "minitest", '~> 5.0'
