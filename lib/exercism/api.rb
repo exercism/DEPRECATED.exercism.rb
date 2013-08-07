@@ -11,7 +11,7 @@ class Exercism
     end
 
     def conn
-     conn = Faraday.new(:url => url) do |c|
+      Faraday.new(:url => url) do |c|
         c.use Faraday::Adapter::NetHttp
         c.headers['User-Agent'] = user_agent
       end
