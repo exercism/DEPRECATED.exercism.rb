@@ -1,3 +1,4 @@
+require 'timeout'
 require 'rubygems' if RUBY_VERSION == '1.8.7'
 require 'thor'
 
@@ -52,7 +53,7 @@ class Exercism
       require 'exercism'
 
       submission = Submission.new(file)
-
+      
       if submission.test?
         say "It looks like this is a test, you probably don't want to do that."
         if no?("Do you want to submit it anyway? [y/n]")
@@ -60,8 +61,67 @@ class Exercism
         end
       end
 
+      # # 1. get path to test file on users system
+      # use project_dir method from Exercism gem
+      path_to_bob_test = Exercism.project_dir+'/ruby/bob/bob_test.rb'
+
+
+      # 2. intercept stderr to check whether tests passed, failed, or other
+        # first problem we ran into was missing file for test
+        # doesn't throw an error, but rather asks user for input
+        # this waits for user input, so we tried to timeout 
+        # can't figure out how to kill the process
+
+        # here are our attempts so far
+        process_thread = Thread.new do
+          `ruby #{path_to_bob_test}` 
+        end
+
+        timeout_thread = Thread.new do
+          sleep 4   # the timeout
+          if process_thread.alive?
+            $stderr.puts "Timeout"
+            process_thread.kill
+          end
+        end
+
+        # process_thread.join
+        # timeout_thread.kill
+        puts "killed process thread"
+
+
+        # we want to rescue the errors, but can't proceed
+        # until figuring out how to kill the process 
+
+      # begin
+      #   status = Timeout::timeout(4) {
+      #     output = `ruby #{path_to_bob_test}`
+      #   }
+      #   puts "putting status"
+      #   p status
+      #   status
+      # rescue Error
+      #   puts "hey your shit blew up"
+      # end
+
+      # system("rm -rf temp")
+
+
+
+      # 3. If all tests are passing, then allow user to submit
+      #  Note: Didn't get to this step, because hung up on 
+      # the issue above. Unable to kill process in test file.
+      
+
+
+
+      # # # # #
+      # NOTE : DON'T ACTUALLY SUBMIT
+      return
+
       begin
-        response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.file)
+        # NOTE : DON"T ACTUALLY SUBMIT
+        # response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.file)
         say "Your assignment has been submitted."
 
         body = JSON.parse(response.body)
