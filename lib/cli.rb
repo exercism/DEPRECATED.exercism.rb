@@ -48,6 +48,7 @@ class Exercism
 
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
+    method_option :ask, :aliases => '-a', :default => false, :type => :boolean, :desc => 'ask before submitting assignment'
     def submit(file)
       require 'exercism'
 
@@ -56,6 +57,12 @@ class Exercism
       if submission.test?
         say "It looks like this is a test, you probably don't want to do that."
         if no?("Do you want to submit it anyway? [y/n]")
+          return
+        end
+      end
+
+      if options[:ask]
+        if no?("Are you sure you want to submit this assignment? [y/n]")
           return
         end
       end
