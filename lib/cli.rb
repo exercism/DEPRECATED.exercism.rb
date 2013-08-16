@@ -69,11 +69,15 @@ class Exercism
 
       begin
         response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.file)
-        say "Your assignment has been submitted."
 
         body = JSON.parse(response.body)
-        url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
-        say "For feedback on your submission visit #{url}"
+        if body["error"]
+          say body["error"]
+        else
+          say "Your assignment has been submitted."
+          url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
+          say "For feedback on your submission visit #{url}"
+        end
       rescue Exception => e
         puts "There was an issue with your submission."
         puts e.message
