@@ -41,7 +41,31 @@ class Exercism
       response
     end
 
+    def stash(filename)
+      path = File.join(filename)
+      contents = File.read path
+      response = conn.post do |req|
+        req.url endpoint('user/assignments/stash')
+        req.headers['Accept'] = 'application/json'
+        req.headers['Content-Type'] = 'application/json'
+        req.body = {:code => contents, :key => user.key, :path => path}.to_json
+      end
+      response
+    end
+
+    def loot
+      get_stash('user/assignments/stash')
+    end
+
     private
+
+    def get_stash(action)
+      response = conn.get do |req|
+        req.url endpoint(action)
+        req.params['key'] = user.key
+      end
+      Stash.new(JSON.parse(response.body))
+    end
 
     def get_and_save(action)
       response = conn.get do |req|

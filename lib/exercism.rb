@@ -18,6 +18,7 @@ require 'exercism/user'
 require 'exercism/assignment'
 require 'exercism/submission'
 require 'exercism/api'
+require 'exercism/stash'
 
 class Exercism
 

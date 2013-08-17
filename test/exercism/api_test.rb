@@ -75,4 +75,27 @@ class ApiTest < Minitest::Test
     end
   end
 
+  def test_send_stash_to_api
+    submission = File.join(FileUtils.pwd, 'bob.rb')
+    File.open(submission, 'w') do |f|
+      f.write "puts 'hello world'"
+    end
+
+    Exercism.stub(:home, home) do
+      VCR.use_cassette('alice-submits-stash') do
+        response = Exercism::Api.new('http://192.168.213.37:4567', Exercism.user).stash(submission)
+        assert_equal 201, response.status
+      end
+    end
+  end
+
+  def test_fetch_stash_from_api
+    Exercism.stub(:home, home) do
+      VCR.use_cassette('alice-gets-stash') do
+        response = Exercism::Api.new('http://192.168.213.37:4567', Exercism.user).loot
+        assert response
+      end
+    end
+  end
+
 end
