@@ -20,7 +20,10 @@ class Exercism
       {
         :ruby => '_test.rb',
         :js => '.spec.js',
-        :elixir => '_test.exs'
+        :elixir => '_test.exs',
+        :clojure => '_test.clj',
+        :python => '_test.py',
+        :go => '_test.go',
       }
     end
 
