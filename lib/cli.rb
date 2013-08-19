@@ -68,7 +68,7 @@ class Exercism
       end
 
       begin
-        response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.file)
+        response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.path)
 
         body = JSON.parse(response.body)
         if body["error"]

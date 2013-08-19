@@ -49,4 +49,12 @@ class SubmissionTest < Minitest::Test
   def test_identifies_go_tests
     assert Exercism::Submission.test?('queens_test.go')
   end
+
+  def test_full_path
+    submission = Exercism::Submission.new('./test/fixtures/ruby/bob/bob.rb')
+    refute submission.path.start_with?('.')
+    assert submission.path.end_with?('/test/fixtures/ruby/bob/bob.rb')
+    diff = submission.path.length - submission.file.length
+    assert diff > 1
+  end
 end

@@ -10,6 +10,10 @@ class Exercism
       @file = file
     end
 
+    def path
+      File.absolute_path(file)
+    end
+
     def test?
       test_identifiers.any? do |_, suffix|
         file.end_with?(suffix)
