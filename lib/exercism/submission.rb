@@ -11,7 +11,7 @@ class Exercism
     end
 
     def path
-      File.absolute_path(file)
+      File.expand_path(file)
     end
 
     def test?
