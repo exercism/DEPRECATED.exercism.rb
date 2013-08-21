@@ -84,6 +84,29 @@ class Exercism
       end
     end
 
+    desc "unsubmit", "Delete the last submission"
+    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
+    def unsubmit
+      require 'exercism'
+      begin
+        api = Exercism::Api.new(options[:host], Exercism.user)
+        response = api.unsubmit
+
+        if response.status == 204
+          say "The last submission was successfully deleted."
+        else
+          body = JSON.parse(response.body)
+          if body["error"]
+            say body["error"]
+          end
+        end
+
+      rescue Exception => e
+        puts "There was an issue with your request."
+        puts e.message
+      end
+    end
+
     desc "login", "Save exercism.io api credentials"
     def login
       require 'exercism'
