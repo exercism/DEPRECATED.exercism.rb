@@ -41,6 +41,16 @@ class Exercism
       response
     end
 
+    def unsubmit
+      response = conn.delete do |req|
+        req.url endpoint('user/assignments')
+        req.headers['Accept'] = 'application/json'
+        req.headers['Content-Type'] = 'application/json'
+        req.params = {:key => user.key}
+      end
+      response
+    end
+
     private
 
     def get_and_save(action)
