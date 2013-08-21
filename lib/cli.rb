@@ -89,7 +89,7 @@ class Exercism
     def unsubmit
       require 'exercism'
       begin
-        api = Exercism::Api.new("http://localhost:4567", Exercism.user)
+        api = Exercism::Api.new(options[:host], Exercism.user)
         response = api.unsubmit
 
         if response.status == 204
