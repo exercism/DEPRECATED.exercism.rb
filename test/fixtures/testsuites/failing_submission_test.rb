@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 
-require File.expand_path('../fake_submission.rb', __FILE__)
+require File.expand_path('../failing_submission.rb', __FILE__)
 
 class FailingSubmissionTest < Minitest::Unit::TestCase
 
