@@ -1,7 +1,7 @@
 class Exercism
   class TestSuite
 
-    require 'Open3'
+    require 'open3'
 
     attr_reader :path, :filename, :filetype, :test_result
     def initialize(file)
