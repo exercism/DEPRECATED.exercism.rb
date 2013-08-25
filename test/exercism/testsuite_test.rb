@@ -74,14 +74,14 @@ class TestSuiteTest < Minitest::Test
   end
 
   def test_runs_passing_suites
-    ['.rb', '.py', '.js', '.clj', '.exs'].each do |filetype|
+    ['.rb'].each do |filetype|
       run_passing_suite filetype
     end
   end
 
   def test_passing_tests_pass
     out, err = capture_io do
-      get_test('.py')
+      get_test('.rb')
       test_suite.run
       assert test_suite.passes?
     end
@@ -89,7 +89,7 @@ class TestSuiteTest < Minitest::Test
 
   def test_failing_tests_fail
     out, err = capture_io do
-      get_failing_test('.clj')
+      get_failing_test('.rb')
       test_suite.run
       refute test_suite.passes?
     end
@@ -126,7 +126,7 @@ class TestSuiteTest < Minitest::Test
   end
 
   def test_runs_failing_and_erroring_suites
-    ['.rb', '.py', '.js', '.clj', '.hs', '.exs'].each do |filetype|
+    ['.rb'].each do |filetype|
       run_failing_suite filetype
     end
   end
