@@ -1,7 +1,7 @@
 class Exercism
   class TestSuite
 
-    require 'open3'
+    require 'exercism/testrunner'
 
     attr_reader :path, :filename, :filetype, :test_result
     def initialize(file)
@@ -14,7 +14,7 @@ class Exercism
       begin
         puts "Running test suite #{filename}..."
         puts
-        @test_result = Open3.capture3 "#{command} #{path}"
+        @test_result = Exercism::TestRunner.run_command  "#{command} #{path}"
         show_results
       rescue Errno::ENOENT
         show_install_help
