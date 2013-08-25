@@ -1,4 +1,4 @@
-Code.load_file("fake_submission.exs")
+Code.load_file("test/fixtures/testsuites/fake_submission.exs")
 ExUnit.start
 
 defmodule FakeSubmissionTest do

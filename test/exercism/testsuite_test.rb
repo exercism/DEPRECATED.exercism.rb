@@ -48,8 +48,8 @@ class TestSuiteTest < Minitest::Test
   end
 
   def test_adds_correct_clojure_file
-    get_test('.go')
-    assert test_suite.filename == 'fake_submission_test.go'
+    get_test('.clj')
+    assert test_suite.filename == 'fake_submission_test.clj'
   end
 
   def test_adds_correct_path
@@ -66,7 +66,7 @@ class TestSuiteTest < Minitest::Test
   end
 
   def run_passing_suite filetype
-    capture_io do
+    out, err = capture_io do
       get_test filetype
       test_suite.run
       assert test_suite.passes?
@@ -74,23 +74,70 @@ class TestSuiteTest < Minitest::Test
   end
 
   def test_runs_passing_suites
-    ['.rb', '.py', '.js', '.hs'].each do |filetype|
+    ['.rb', '.py', '.js', '.clj', '.exs'].each do |filetype|
       run_passing_suite filetype
     end
   end
 
-  def run_failing_suite filetype
-    capture_io do
-      get_failing_test filetype
+  def test_passing_tests_pass
+    out, err = capture_io do
+      get_test('.py')
+      test_suite.run
+      assert test_suite.passes?
+    end
+  end
+
+  def test_failing_tests_fail
+    out, err = capture_io do
+      get_failing_test('.clj')
       test_suite.run
       refute test_suite.passes?
     end
   end
+  
+  def test_shows_fail_message
+    out, err = capture_io do
+      get_test('.js')
+      test_suite.show_fail_message
+    end
+    assert out.include? "The test suite failed."
+    assert out.include? "Check for syntax errors"
+  end
 
-  def test_runs_failing_suites
+  def test_shows_install_help
+    out, err = capture_io do
+      get_test('.exs')
+      test_suite.show_install_help
+    end
+    assert out.include? "Oops! Exercism can't run your tests."
+    assert out.include? "Elixir or Erlang are missing or misconfigured."
+    assert out.include? "Visit http://exercism.io/setup/elixir for setup help."
+  end
+
+  def run_failing_suite filetype
+    out, err = "", ""
+    out, err = capture_io do
+      get_failing_test filetype
+      test_suite.run
+      refute test_suite.passes?
+    end
+    message = "The test suite failed."
+    assert (out.include? message) || (err.include? message)
+  end
+
+  def test_runs_failing_and_erroring_suites
     ['.rb', '.py', '.js', '.clj', '.hs', '.exs'].each do |filetype|
       run_failing_suite filetype
     end
   end
 
+  def test_prints_setup_help_on_error
+    out, err = capture_io do
+      get_test('.rb')
+      test_suite.run 'bin/thisbinarydoesnotexist'
+    end
+    assert out.include? "Oops! Exercism can't run your tests."
+    assert out.include? "Ruby is missing or misconfigured."
+    assert out.include? "Visit http://exercism.io/setup/ruby for setup help."
+  end
 end

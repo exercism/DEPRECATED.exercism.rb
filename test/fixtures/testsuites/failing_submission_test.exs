@@ -1,4 +1,4 @@
-Code.load_file("failing_submission.exs")
+Code.load_file("test/fixtures/testsuites/failing_submission.exs")
 ExUnit.start
 
 defmodule FailingSubmissionTest do

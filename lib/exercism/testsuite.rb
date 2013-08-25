@@ -10,11 +10,11 @@ class Exercism
       @filetype = language file
     end
 
-    def run
+    def run command = test_config[filetype][:command]
       begin
         puts "Running test suite #{filename}..."
         puts
-        @test_result = Open3.capture3 "#{test_config[filetype][:command]} #{path}"
+        @test_result = Open3.capture3 "#{command} #{path}"
         show_results
       rescue Errno::ENOENT
         show_install_help
@@ -30,10 +30,10 @@ class Exercism
       stdout, stderr, result = test_result
       puts stdout
       puts stderr
-      fail_message if result != 0
+      show_fail_message if result != 0
     end
 
-    def fail_message
+    def show_fail_message
       puts
       puts "The test suite failed."
       puts "Check for syntax errors and tricky testcases and try again."
@@ -56,7 +56,6 @@ class Exercism
         '.clj' => :clojure,
         '.py'  => :python,
         '.go'  => :go,
-        '.fk'  => :fake,
       }
     end
 
@@ -85,10 +84,6 @@ class Exercism
         :python  => { :suffix  => '_test.py',
                       :command => 'python',
                       :help    => 'Python is missing or misconfigured.', },
-
-        :go      => { :suffix  => '_test.go',
-                      :command => 'go test',
-                      :help    => 'Golang is missing or misgonfigured.', },
       }
     end
 
