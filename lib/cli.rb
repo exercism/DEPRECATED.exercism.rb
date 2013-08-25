@@ -49,9 +49,14 @@ class Exercism
     desc "test FILE", "Run the test suite included with the current assignment"
     def test(file)
       require 'exercism'
-      
-      test_suite = TestSuite.new(file)
-      test_suite.run
+
+      begin
+        test_suite = TestSuite.new(file)
+        test_suite.run
+      rescue Exception => e
+        say "There was a problem running your tests."
+        puts e.message
+      end
     end
 
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
@@ -76,12 +81,13 @@ class Exercism
         end
       end
 
-      unless test_suite.passes?
-        say "You can't submit this assignment until the tests pass."
-        return
-      end
       
       begin
+        unless test_suite.passes?
+          say "You can't submit this assignment until the tests pass."
+          return
+        end
+
         response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.path)
 
         body = JSON.parse(response.body)

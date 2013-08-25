@@ -97,6 +97,7 @@ class Exercism
 
     def test_suffix file
       lang = language file
+      raise "Invalid file. This doesn't seem to be an assignment." if lang.nil?
       test_config[lang][:suffix]
     end
 
