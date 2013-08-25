@@ -51,6 +51,14 @@ class Exercism
       response
     end
 
+    def current
+      response = conn.get do |req|
+        req.url endpoint('user/assignments/current')
+        req.params = {:key => user.key}
+      end
+      response
+    end
+
     private
 
     def get_and_save(action)

@@ -75,4 +75,14 @@ class ApiTest < Minitest::Test
     end
   end
 
+  def test_get_current_assignments
+    Exercism.stub(:home, home) do
+      VCR.use_cassette('alice-gets-current-assignments') do
+        response = Exercism::Api.new('http://localhost:4567', Exercism.user).current
+        body = JSON.parse(response.body)
+        assert_equal 200, response.status
+      end
+    end
+  end
+
 end

@@ -132,6 +132,20 @@ class Exercism
       puts "You are not logged in."
     end
 
+    desc "current", "Get the current exercise that you are on"
+    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
+    def current
+      require 'exercism'
+
+      result = Exercism::Api.new(options[:host], Exercism.user).current
+      body = JSON.parse(result.body)
+      puts "Current Assignments"
+      body['assignments'].each do |assignment|
+        track = assignment['track']
+        puts "Language: " + track + spacing(track) + "Exercise: " + assignment['slug']
+      end
+    end
+
     private
 
     def username
@@ -166,5 +180,11 @@ class Exercism
       end
     end
 
+    def spacing(track)
+      len = 17 - track.length
+      space = ''
+      len.times {space += ' '}
+      space
+    end
   end
 end
