@@ -133,7 +133,7 @@ class Exercism
     end
 
     desc "current", "Get the current exercise that you are on"
-    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
+    method_option :host, :aliases => '-h', :default => 'http://localhost:4567', :desc => 'the url of the exercism application'
     def current
       require 'exercism'
 
