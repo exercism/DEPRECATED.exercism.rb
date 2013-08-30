@@ -37,6 +37,13 @@ class Exercism
       report(assignments)
     end
 
+    desc "open", "Opens exercism.io in your default browser"
+    def open
+      require 'launchy'
+
+      Launchy.open("http://exercism.io")
+    end
+
     desc "peek", "Fetch upcoming assignment from exercism.io"
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def peek
