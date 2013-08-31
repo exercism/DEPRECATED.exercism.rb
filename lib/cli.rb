@@ -53,6 +53,19 @@ class Exercism
       report(assignments)
     end
 
+    desc "test FILE", "Run the test suite included with the current assignment"
+    def test(file)
+      require 'exercism'
+
+      begin
+        test_suite = TestSuite.new(file)
+        test_suite.run
+      rescue Exception => e
+        say "There was a problem running your tests."
+        puts e.message
+      end
+    end
+
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     method_option :ask, :aliases => '-a', :default => false, :type => :boolean, :desc => 'ask before submitting assignment'
@@ -60,6 +73,7 @@ class Exercism
       require 'exercism'
 
       submission = Submission.new(file)
+      test_suite = TestSuite.new(file)
 
       if submission.test?
         say "It looks like this is a test, you probably don't want to do that."
@@ -74,7 +88,13 @@ class Exercism
         end
       end
 
+      
       begin
+        unless test_suite.passes?
+          say "You can't submit this assignment until the tests pass."
+          return
+        end
+
         response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.path)
 
         body = JSON.parse(response.body)
