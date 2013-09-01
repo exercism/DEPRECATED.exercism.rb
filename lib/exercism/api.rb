@@ -34,15 +34,15 @@ class Exercism
       contents = File.read path
 
       json_request(:post, 'user/assignments', {
-        key:  user.key,
-        code: contents,
-        path: path
+        :key  => user.key,
+        :code => contents,
+        :path => path
       })
     end
 
     def unsubmit
       json_request(:delete, 'user/assignments', {
-        key: user.key
+        :key => user.key
       })
     end
 
@@ -57,7 +57,7 @@ class Exercism
     end
 
     def json_request(verb, path, body)
-      response = conn.public_send(verb) do |request|
+      response = conn.send(verb) do |request|
         request.url endpoint(path)
         request.headers['Accept'] = 'application/json'
         request.headers['Content-Type'] = 'application/json'

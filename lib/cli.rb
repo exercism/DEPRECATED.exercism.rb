@@ -159,7 +159,7 @@ class Exercism
 
     def monitored_request(action, *args)
       begin
-        request = api.public_send(action, *args)
+        request = api.send(action, *args)
         body = JSON.parse(body)
 
         if body["error"]
