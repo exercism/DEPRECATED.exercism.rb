@@ -32,23 +32,18 @@ class Exercism
     def submit(filename)
       path = File.join(filename)
       contents = File.read path
-      response = conn.post do |req|
-        req.url endpoint('user/assignments')
-        req.headers['Accept'] = 'application/json'
-        req.headers['Content-Type'] = 'application/json'
-        req.body = {:code =>  contents, :key => user.key, :path => path}.to_json
-      end
-      response
+
+      json_request(:post, 'user/assignments', {
+        key:  user.key,
+        code: contents,
+        path: path
+      })
     end
 
     def unsubmit
-      response = conn.delete do |req|
-        req.url endpoint('user/assignments')
-        req.headers['Accept'] = 'application/json'
-        req.headers['Content-Type'] = 'application/json'
-        req.params = {:key => user.key}
-      end
-      response
+      json_request(:delete, 'user/assignments', {
+        key: user.key
+      })
     end
 
     private
@@ -59,6 +54,17 @@ class Exercism
         req.params['key'] = user.key
       end
       save response.body
+    end
+
+    def json_request(verb, path, body)
+      response = conn.public_send(verb) do |request|
+        request.url endpoint(path)
+        request.headers['Accept'] = 'application/json'
+        request.headers['Content-Type'] = 'application/json'
+        request.body = body.to_json
+      end
+
+      response
     end
 
     def user_agent
