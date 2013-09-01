@@ -58,6 +58,7 @@ class Exercism
     method_option :ask, :aliases => '-a', :default => false, :type => :boolean, :desc => 'ask before submitting assignment'
     def submit(file)
       require 'exercism'
+      require 'cli/monitored_request'
 
       submission = Submission.new(file)
 
@@ -74,7 +75,7 @@ class Exercism
         end
       end
 
-      monitored_request :submit, submission.path do |request, body|
+      MonitoredRequest.new(api).request :submit, submission.path do |request, body|
         say "Your assignment has been submitted."
         url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
         say "For feedback on your submission visit #{url}"
@@ -85,8 +86,9 @@ class Exercism
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def unsubmit
       require 'exercism'
+      require 'cli/monitored_request'
 
-      monitored_request :unsubmit do |request, body|
+      MonitoredRequest.new(api).request :unsubmit do |request, body|
         if response.status == 204
           say "The last submission was successfully deleted."
         end
@@ -150,26 +152,6 @@ class Exercism
           say File.join(assignment.exercise, 'README.md')
           say File.join(assignment.exercise, assignment.test_file)
         end
-      end
-    end
-
-    def report_error(error)
-      abort error if error
-    end
-
-    def monitored_request(action, *args)
-      begin
-        request = api.send(action, *args)
-        body = JSON.parse(body)
-
-        if body["error"]
-          report_error
-        else
-          yield request, body
-        end
-      rescue Exception => e
-        puts "There was an issue with your request."
-        puts e.message
       end
     end
   end
