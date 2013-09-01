@@ -74,20 +74,10 @@ class Exercism
         end
       end
 
-      begin
-        response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.path)
-
-        body = JSON.parse(response.body)
-        if body["error"]
-          say body["error"]
-        else
-          say "Your assignment has been submitted."
-          url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
-          say "For feedback on your submission visit #{url}"
-        end
-      rescue Exception => e
-        puts "There was an issue with your submission."
-        puts e.message
+      monitored_request :submit, submission.path do |request, body|
+        say "Your assignment has been submitted."
+        url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
+        say "For feedback on your submission visit #{url}"
       end
     end
 
@@ -95,22 +85,11 @@ class Exercism
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def unsubmit
       require 'exercism'
-      begin
-        api = Exercism::Api.new(options[:host], Exercism.user)
-        response = api.unsubmit
 
+      monitored_request :unsubmit do |request, body|
         if response.status == 204
           say "The last submission was successfully deleted."
-        else
-          body = JSON.parse(response.body)
-          if body["error"]
-            say body["error"]
-          end
         end
-
-      rescue Exception => e
-        puts "There was an issue with your request."
-        puts e.message
       end
     end
 
@@ -149,6 +128,7 @@ class Exercism
       ask("Your exercism.io API key:")
     end
 
+
     def project_dir
       default_dir = FileUtils.pwd
       say "What is your exercism exercises project path?"
@@ -173,5 +153,24 @@ class Exercism
       end
     end
 
+    def report_error(error)
+      abort error if error
+    end
+
+    def monitored_request(action, *args)
+      begin
+        request = api.public_send(action, *args)
+        body = JSON.parse(body)
+
+        if body["error"]
+          report_error
+        else
+          yield request, body
+        end
+      rescue Exception => e
+        puts "There was an issue with your request."
+        puts e.message
+      end
+    end
   end
 end
