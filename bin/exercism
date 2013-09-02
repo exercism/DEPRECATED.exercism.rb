@@ -6,7 +6,7 @@ require 'cli'
 
 begin
   Exercism::CLI.start
-rescue Exception => e
+rescue StandardError => e
   puts
   puts "ERROR: Something went wrong. Exiting."
   puts e.message
