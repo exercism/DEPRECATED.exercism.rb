@@ -1,7 +1,9 @@
 require 'rubygems' if RUBY_VERSION == '1.8.7'
 require 'thor'
+require 'exercism/cli/stash.rb'
 
 class Exercism
+
   class CLI < Thor
 
     desc "version", "Output current version of gem"
@@ -98,40 +100,8 @@ class Exercism
       puts "You are not logged in."
     end
 
-    desc "loot", "Retrieve stashed file from exercism.io"
-    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
-    def loot
-      require 'exercism'
-
-      begin
-        stash = api.loot
-        if File.exists?(stash.path)
-          say "File: " + stash.name + " already exists"
-          if no?("Overwrite it? [y/n]")
-            return
-          end
-        end
-        stash.save
-        puts "Stash file saved: " + stash.name
-      rescue Exception => e
-        puts "Error: No stash file was found."
-        puts e.message
-      end
-    end
-
-    desc "stash FILE", "Submit unfinished code to temporary stash file to retrieve later"
-    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
-    def stash(file)
-      require 'exercism'
-
-      begin
-        response = Exercism::Api.new(options[:host], Exercism.user).stash(file)
-        say "Stash file has been saved"
-      rescue Exception => e
-        puts "Error submitting stash"
-        puts e.message
-      end
-    end
+    desc "stash [SUBCOMMAND]", "Stash or apply code that is in-progress"
+    subcommand "stash", Stash
 
     private
 
@@ -168,4 +138,6 @@ class Exercism
     end
 
   end
+
+  
 end

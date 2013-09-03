@@ -25,7 +25,7 @@ http_interactions:
       x-content-type-options:
       - nosniff
       set-cookie:
-      - rack.session=BAh7CEkiD3Nlc3Npb25faWQGOgZFRiJFNDQ5NzJmNTkwMzhiMmQ1ZjI0NDky%0AZjBmMWM2N2U4ZDM4MDIyODQ4MDBhMWU2M2E0ZGE4ODcxODRkOTRmNDJhOEki%0ACWNzcmYGOwBGIkU0MGNkYTNmMTVhMTUzZDcyYmJjYTExNjIxMTY3NzZjM2Ex%0AOWNiMTBjNDFjZjgzMGM2NjY1ZDUxYmM5ODBlYmZlSSINdHJhY2tpbmcGOwBG%0AewhJIhRIVFRQX1VTRVJfQUdFTlQGOwBGIi1jODFhNWRiMmQwMDlhYmFlNTJk%0AMmRiM2Q3Y2ZlODQ1ZDg0NTY3YzZhSSIZSFRUUF9BQ0NFUFRfRU5DT0RJTkcG%0AOwBGIi1kYTM5YTNlZTVlNmI0YjBkMzI1NWJmZWY5NTYwMTg5MGFmZDgwNzA5%0ASSIZSFRUUF9BQ0NFUFRfTEFOR1VBR0UGOwBGIi1kYTM5YTNlZTVlNmI0YjBk%0AMzI1NWJmZWY5NTYwMTg5MGFmZDgwNzA5%0A--0e661e6035ab3e1ca2108a530d3139290a420f1a;
+      - rack.session=BAh7CEkiD3Nlc3Npb25faWQGOgZFRiJFMmQ4YjRlNmUxNmMxODkyMTQ0M2Y0%0AOTA3NTkwYWJkZGFkZWI0NGE0NzA1MDA0OWE2NmQ4ZTM5N2YzMmRmNzE1Ykki%0ACWNzcmYGOwBGIkVjMmM0M2ZlNTFjNjRiZTMxYmJjNGIyYzRhNmY4OWQ0OTEw%0AYmQzODJiN2FlNzJhOTUyODc0OGI4MGQ1ZTUzOWI4SSINdHJhY2tpbmcGOwBG%0AewhJIhRIVFRQX1VTRVJfQUdFTlQGOwBGIi1jODFhNWRiMmQwMDlhYmFlNTJk%0AMmRiM2Q3Y2ZlODQ1ZDg0NTY3YzZhSSIZSFRUUF9BQ0NFUFRfRU5DT0RJTkcG%0AOwBGIi1kYTM5YTNlZTVlNmI0YjBkMzI1NWJmZWY5NTYwMTg5MGFmZDgwNzA5%0ASSIZSFRUUF9BQ0NFUFRfTEFOR1VBR0UGOwBGIi1kYTM5YTNlZTVlNmI0YjBk%0AMzI1NWJmZWY5NTYwMTg5MGFmZDgwNzA5%0A--da7f28f9a4756d813c05aebea82e8ba690ac9c41;
         path=/; HttpOnly
       connection:
       - close
@@ -35,10 +35,10 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"code":"puts ''hello world''","filename":"bob.rb"}'
     http_version: '1.1'
-  recorded_at: Tue, 03 Sep 2013 19:18:56 GMT
+  recorded_at: Tue, 03 Sep 2013 19:48:18 GMT
 - request:
     method: get
-    uri: http://localhost:4567/api/v1/user/assignments/stash?key=634abfb095ed621e1c793c9875fcd9fda455ea90&filename=bob.rb
+    uri: http://localhost:4567/api/v1/user/assignments/stash/list?key=634abfb095ed621e1c793c9875fcd9fda455ea90
     body:
       encoding: US-ASCII
       string: ''
@@ -57,11 +57,11 @@ http_interactions:
       content-type:
       - application/json;charset=utf-8
       content-length:
-      - '49'
+      - '19'
       x-content-type-options:
       - nosniff
       set-cookie:
-      - rack.session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiJFZjczODQ4ZTU3Y2YwODM2OTljNWUy%0AY2UxMmZhZmQwY2NmZDRhZjNlN2E1MDM4ZjVkOGI0YTU0OTg4MGY1NjNkMUki%0ADXRyYWNraW5nBjsARnsISSIUSFRUUF9VU0VSX0FHRU5UBjsARiItYzgxYTVk%0AYjJkMDA5YWJhZTUyZDJkYjNkN2NmZTg0NWQ4NDU2N2M2YUkiGUhUVFBfQUND%0ARVBUX0VOQ09ESU5HBjsARiItZGRkMDk4OTE3NGYxOWE1YjE4NzkxMjEzY2M0%0AMGM1YTYwOWQyNTQ2Y0kiGUhUVFBfQUNDRVBUX0xBTkdVQUdFBjsARiItZGEz%0AOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ%3D%3D%0A--e3eb7d5f7cfd161745db2e233591f4364abd520f;
+      - rack.session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiJFMTY2YzVlNTE2NDgwNmFkYWFjNDlh%0ANzg5MTY1ZTA5Zjk4NDgyYjhiODc5Y2NjNmQzNWVkZGEwZThmOWRkMDZiY0ki%0ADXRyYWNraW5nBjsARnsISSIUSFRUUF9VU0VSX0FHRU5UBjsARiItYzgxYTVk%0AYjJkMDA5YWJhZTUyZDJkYjNkN2NmZTg0NWQ4NDU2N2M2YUkiGUhUVFBfQUND%0ARVBUX0VOQ09ESU5HBjsARiItZGRkMDk4OTE3NGYxOWE1YjE4NzkxMjEzY2M0%0AMGM1YTYwOWQyNTQ2Y0kiGUhUVFBfQUNDRVBUX0xBTkdVQUdFBjsARiItZGEz%0AOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ%3D%3D%0A--88e3a688ea8b8538dd22926f606ddfec4aa86ada;
         path=/; HttpOnly
       connection:
       - close
@@ -69,7 +69,7 @@ http_interactions:
       - thin 1.5.1 codename Straight Razor
     body:
       encoding: US-ASCII
-      string: ! '{"code":"puts ''hello world''","filename":"bob.rb"}'
+      string: ! '{"list":["bob.rb"]}'
     http_version: '1.1'
-  recorded_at: Tue, 03 Sep 2013 19:18:56 GMT
+  recorded_at: Tue, 03 Sep 2013 19:48:18 GMT
 recorded_with: VCR 2.5.0
