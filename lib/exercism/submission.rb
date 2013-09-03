@@ -10,6 +10,10 @@ class Exercism
       @file = file
     end
 
+    def path
+      File.expand_path(file)
+    end
+
     def test?
       test_identifiers.any? do |_, suffix|
         file.end_with?(suffix)
@@ -20,7 +24,10 @@ class Exercism
       {
         :ruby => '_test.rb',
         :js => '.spec.js',
-        :elixir => '_test.exs'
+        :elixir => '_test.exs',
+        :clojure => '_test.clj',
+        :python => '_test.py',
+        :go => '_test.go',
       }
     end
 

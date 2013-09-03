@@ -39,6 +39,13 @@ class Exercism
       report(assignments)
     end
 
+    desc "open", "Opens exercism.io in your default browser"
+    def open
+      require 'launchy'
+
+      Launchy.open("http://exercism.io")
+    end
+
     desc "peek", "Fetch upcoming assignment from exercism.io"
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def peek
@@ -50,8 +57,10 @@ class Exercism
 
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
+    method_option :ask, :aliases => '-a', :default => false, :type => :boolean, :desc => 'ask before submitting assignment'
     def submit(file)
       require 'exercism'
+      require 'cli/monitored_request'
 
       submission = Submission.new(file)
 
@@ -62,16 +71,29 @@ class Exercism
         end
       end
 
-      begin
-        response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.file)
-        say "Your assignment has been submitted."
+      if options[:ask]
+        if no?("Are you sure you want to submit this assignment? [y/n]")
+          return
+        end
+      end
 
-        body = JSON.parse(response.body)
+      MonitoredRequest.new(api).request :submit, submission.path do |request, body|
+        say "Your assignment has been submitted."
         url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
         say "For feedback on your submission visit #{url}"
-      rescue Exception => e
-        puts "There was an issue with your submission."
-        puts e.message
+      end
+    end
+
+    desc "unsubmit", "Delete the last submission"
+    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
+    def unsubmit
+      require 'exercism'
+      require 'cli/monitored_request'
+
+      MonitoredRequest.new(api).request :unsubmit do |request, body|
+        if response.status == 204
+          say "The last submission was successfully deleted."
+        end
       end
     end
 
@@ -113,6 +135,7 @@ class Exercism
       ask("Your exercism.io API key:")
     end
 
+
     def project_dir
       default_dir = FileUtils.pwd
       say "What is your exercism exercises project path?"
@@ -136,7 +159,6 @@ class Exercism
         end
       end
     end
-
   end
 
   

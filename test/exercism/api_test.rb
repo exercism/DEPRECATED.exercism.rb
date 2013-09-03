@@ -6,7 +6,7 @@ test_dir = File.join(FileUtils.pwd, 'test/fixtures')
 
 VCR.configure do |c|
   c.cassette_library_dir = File.join(test_dir, 'vcr_cassettes')
-  c.hook_into :fakeweb
+  c.hook_into :webmock
 end
 
 require 'approvals'
