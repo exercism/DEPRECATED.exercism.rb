@@ -25,6 +25,14 @@ This retrieves the README and test suite for your current assignment.
 
 This submits `example.rb` on your current assignment.
 
+    $ exercism stash example.rb
+
+This saves 'example.rb' to exercism.io as an unfinished "stash" file that can be retrieved later. Helpful for use on multiple computers: stash the file you're working on at computer 1, then retrieve it with the loot command on computer 2.
+
+    $ exercism loot
+
+This retrieves the most recent stash file, if one exists, to the current directory.
+
     $ export EXERCISM_ENV=development
 
 Reveals stack traces on errors.

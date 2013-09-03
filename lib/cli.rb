@@ -1,7 +1,9 @@
 require 'rubygems' if RUBY_VERSION == '1.8.7'
 require 'thor'
+require 'exercism/cli/stash.rb'
 
 class Exercism
+
   class CLI < Thor
 
     desc "version", "Output current version of gem"
@@ -120,6 +122,9 @@ class Exercism
       puts "You are not logged in."
     end
 
+    desc "stash [SUBCOMMAND]", "Stash or apply code that is in-progress"
+    subcommand "stash", Stash
+
     private
 
     def username
@@ -155,4 +160,6 @@ class Exercism
       end
     end
   end
+
+  
 end
