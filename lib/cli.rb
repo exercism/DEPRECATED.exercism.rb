@@ -1,7 +1,9 @@
 require 'rubygems' if RUBY_VERSION == '1.8.7'
 require 'thor'
+require 'exercism/cli/stash.rb'
 
 class Exercism
+
   class CLI < Thor
 
     desc "version", "Output current version of gem"
@@ -37,6 +39,13 @@ class Exercism
       report(assignments)
     end
 
+    desc "open", "Opens exercism.io in your default browser"
+    def open
+      require 'launchy'
+
+      Launchy.open("http://exercism.io")
+    end
+
     desc "peek", "Fetch upcoming assignment from exercism.io"
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def peek
@@ -51,6 +60,7 @@ class Exercism
     method_option :ask, :aliases => '-a', :default => false, :type => :boolean, :desc => 'ask before submitting assignment'
     def submit(file)
       require 'exercism'
+      require 'cli/monitored_request'
 
       submission = Submission.new(file)
 
@@ -67,20 +77,10 @@ class Exercism
         end
       end
 
-      begin
-        response = Exercism::Api.new(options[:host], Exercism.user).submit(submission.path)
-
-        body = JSON.parse(response.body)
-        if body["error"]
-          say body["error"]
-        else
-          say "Your assignment has been submitted."
-          url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
-          say "For feedback on your submission visit #{url}"
-        end
-      rescue Exception => e
-        puts "There was an issue with your submission."
-        puts e.message
+      MonitoredRequest.new(api).request :submit, submission.path do |request, body|
+        say "Your assignment has been submitted."
+        url = "#{options[:host]}/#{Exercism.user.github_username}/#{body['language']}/#{body['exercise']}"
+        say "For feedback on your submission visit #{url}"
       end
     end
 
@@ -88,22 +88,12 @@ class Exercism
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     def unsubmit
       require 'exercism'
-      begin
-        api = Exercism::Api.new(options[:host], Exercism.user)
-        response = api.unsubmit
+      require 'cli/monitored_request'
 
+      MonitoredRequest.new(api).request :unsubmit do |request, body|
         if response.status == 204
           say "The last submission was successfully deleted."
-        else
-          body = JSON.parse(response.body)
-          if body["error"]
-            say body["error"]
-          end
         end
-
-      rescue Exception => e
-        puts "There was an issue with your request."
-        puts e.message
       end
     end
 
@@ -146,6 +136,9 @@ class Exercism
       end
     end
 
+    desc "stash [SUBCOMMAND]", "Stash or apply code that is in-progress"
+    subcommand "stash", Stash
+
     private
 
     def username
@@ -155,6 +148,7 @@ class Exercism
     def key
       ask("Your exercism.io API key:")
     end
+
 
     def project_dir
       default_dir = FileUtils.pwd
@@ -186,5 +180,5 @@ class Exercism
       len.times {space += ' '}
       space
     end
-  end
+  end  
 end

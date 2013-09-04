@@ -32,23 +32,42 @@ class Exercism
     def submit(filename)
       path = File.join(filename)
       contents = File.read path
+
+      json_request(:post, 'user/assignments', {
+        :key  => user.key,
+        :code => contents,
+        :path => path
+      })
+    end
+
+    def unsubmit
+      json_request(:delete, 'user/assignments', {
+        :key => user.key
+      })
+    end
+
+    def save_stash(action, filename)
+      path = File.join(filename)
+      contents = File.read path
       response = conn.post do |req|
-        req.url endpoint('user/assignments')
+        req.url endpoint(action)
         req.headers['Accept'] = 'application/json'
         req.headers['Content-Type'] = 'application/json'
-        req.body = {:code =>  contents, :key => user.key, :path => path}.to_json
+        req.body = {:code => contents, :key => user.key, :filename => path}.to_json
       end
       response
     end
 
-    def unsubmit
-      response = conn.delete do |req|
-        req.url endpoint('user/assignments')
-        req.headers['Accept'] = 'application/json'
-        req.headers['Content-Type'] = 'application/json'
-        req.params = {:key => user.key}
+    def apply_stash(action, filename)
+      get_stash(action, filename)
+    end
+
+    def list_stash(action)
+      response = conn.get do |req|
+        req.url endpoint(action)
+        req.params['key'] = user.key
       end
-      response
+      JSON.parse(response.body)
     end
 
     def current
@@ -61,12 +80,32 @@ class Exercism
 
     private
 
+    def get_stash(action, filename)
+      response = conn.get do |req|
+        req.url endpoint(action)
+        req.params['key'] = user.key
+        req.params['filename'] = filename
+      end
+      Stash.new(JSON.parse(response.body))
+    end
+
     def get_and_save(action)
       response = conn.get do |req|
         req.url endpoint(action)
         req.params['key'] = user.key
       end
       save response.body
+    end
+
+    def json_request(verb, path, body)
+      response = conn.send(verb) do |request|
+        request.url endpoint(path)
+        request.headers['Accept'] = 'application/json'
+        request.headers['Content-Type'] = 'application/json'
+        request.body = body.to_json
+      end
+
+      response
     end
 
     def user_agent

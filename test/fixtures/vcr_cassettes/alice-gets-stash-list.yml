@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4567/api/v1/user/assignments/stash
+    body:
+      encoding: UTF-8
+      string: ! '{"code":"puts ''hello world''","key":"634abfb095ed621e1c793c9875fcd9fda455ea90","filename":"/vagrant/exercism/old/bob.rb"}'
+    headers:
+      user-agent:
+      - github.com/kytrinyx/exercism CLI v0.0.21
+      accept:
+      - application/json
+      content-type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '49'
+      x-content-type-options:
+      - nosniff
+      set-cookie:
+      - rack.session=BAh7CEkiD3Nlc3Npb25faWQGOgZFRiJFMmQ4YjRlNmUxNmMxODkyMTQ0M2Y0%0AOTA3NTkwYWJkZGFkZWI0NGE0NzA1MDA0OWE2NmQ4ZTM5N2YzMmRmNzE1Ykki%0ACWNzcmYGOwBGIkVjMmM0M2ZlNTFjNjRiZTMxYmJjNGIyYzRhNmY4OWQ0OTEw%0AYmQzODJiN2FlNzJhOTUyODc0OGI4MGQ1ZTUzOWI4SSINdHJhY2tpbmcGOwBG%0AewhJIhRIVFRQX1VTRVJfQUdFTlQGOwBGIi1jODFhNWRiMmQwMDlhYmFlNTJk%0AMmRiM2Q3Y2ZlODQ1ZDg0NTY3YzZhSSIZSFRUUF9BQ0NFUFRfRU5DT0RJTkcG%0AOwBGIi1kYTM5YTNlZTVlNmI0YjBkMzI1NWJmZWY5NTYwMTg5MGFmZDgwNzA5%0ASSIZSFRUUF9BQ0NFUFRfTEFOR1VBR0UGOwBGIi1kYTM5YTNlZTVlNmI0YjBk%0AMzI1NWJmZWY5NTYwMTg5MGFmZDgwNzA5%0A--da7f28f9a4756d813c05aebea82e8ba690ac9c41;
+        path=/; HttpOnly
+      connection:
+      - close
+      server:
+      - thin 1.5.1 codename Straight Razor
+    body:
+      encoding: US-ASCII
+      string: ! '{"code":"puts ''hello world''","filename":"bob.rb"}'
+    http_version: '1.1'
+  recorded_at: Tue, 03 Sep 2013 19:48:18 GMT
+- request:
+    method: get
+    uri: http://localhost:4567/api/v1/user/assignments/stash/list?key=634abfb095ed621e1c793c9875fcd9fda455ea90
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      user-agent:
+      - github.com/kytrinyx/exercism CLI v0.0.21
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - ! '*/*'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '19'
+      x-content-type-options:
+      - nosniff
+      set-cookie:
+      - rack.session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiJFMTY2YzVlNTE2NDgwNmFkYWFjNDlh%0ANzg5MTY1ZTA5Zjk4NDgyYjhiODc5Y2NjNmQzNWVkZGEwZThmOWRkMDZiY0ki%0ADXRyYWNraW5nBjsARnsISSIUSFRUUF9VU0VSX0FHRU5UBjsARiItYzgxYTVk%0AYjJkMDA5YWJhZTUyZDJkYjNkN2NmZTg0NWQ4NDU2N2M2YUkiGUhUVFBfQUND%0ARVBUX0VOQ09ESU5HBjsARiItZGRkMDk4OTE3NGYxOWE1YjE4NzkxMjEzY2M0%0AMGM1YTYwOWQyNTQ2Y0kiGUhUVFBfQUNDRVBUX0xBTkdVQUdFBjsARiItZGEz%0AOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ%3D%3D%0A--88e3a688ea8b8538dd22926f606ddfec4aa86ada;
+        path=/; HttpOnly
+      connection:
+      - close
+      server:
+      - thin 1.5.1 codename Straight Razor
+    body:
+      encoding: US-ASCII
+      string: ! '{"list":["bob.rb"]}'
+    http_version: '1.1'
+  recorded_at: Tue, 03 Sep 2013 19:48:18 GMT
+recorded_with: VCR 2.5.0
