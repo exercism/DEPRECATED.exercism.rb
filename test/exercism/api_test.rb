@@ -81,6 +81,10 @@ class ApiTest < Minitest::Test
         response = Exercism::Api.new('http://localhost:4567', Exercism.user).current
         body = JSON.parse(response.body)
         assert_equal 200, response.status
+      end
+    end
+  end
+  
   def test_save_stash_to_api
     submission = File.join(FileUtils.pwd, 'bob.rb')
     File.open(submission, 'w') do |f|
