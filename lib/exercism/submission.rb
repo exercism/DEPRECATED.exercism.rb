@@ -20,6 +20,13 @@ class Exercism
       end
     end
 
+    def language
+      test_identifiers.each do |type, suffix|
+        return type if file.end_with?(suffix)
+      end
+      return nil
+    end
+
     def test_identifiers
       {
         :ruby => '_test.rb',
