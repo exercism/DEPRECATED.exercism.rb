@@ -125,6 +125,13 @@ class Exercism
     desc "stash [SUBCOMMAND]", "Stash or apply code that is in-progress"
     subcommand "stash", Stash
 
+    desc "dir", "Display the project path"
+    def dir
+      require 'exercism'
+
+      puts Exercism.config.project_dir
+    end
+
     private
 
     def username
