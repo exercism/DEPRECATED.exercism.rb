@@ -55,6 +55,22 @@ class Exercism
       report(assignments)
     end
 
+    desc "test FILE", "Run tests on your current assignment"
+    def test(file)
+      require 'exercism'
+      submission = Submission.new(file)
+      unless submission.test?
+        say "It looks like you're trying to test with a non-testfile"
+      end
+      case submission.language
+      when :ruby
+        make_system_call("ruby #{file}")
+      else
+        say "Unfortunately we don't know how to run your tests for you."
+        say "Please check exercism.io for information on how to run them manually"
+      end
+    end
+
     desc "submit FILE", "Submit code to exercism.io on your current assignment"
     method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
     method_option :ask, :aliases => '-a', :default => false, :type => :boolean, :desc => 'ask before submitting assignment'
@@ -166,7 +182,11 @@ class Exercism
         end
       end
     end
+
+    def make_system_call command
+      say "Running: #{command}"
+      system(command)
+    end
   end
 
-  
 end
