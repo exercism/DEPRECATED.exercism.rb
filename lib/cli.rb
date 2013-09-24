@@ -122,6 +122,20 @@ class Exercism
       puts "You are not logged in."
     end
 
+    desc "current", "Get the current exercise that you are on"
+    method_option :host, :aliases => '-h', :default => 'http://exercism.io', :desc => 'the url of the exercism application'
+    def current
+      require 'exercism'
+
+      result = Exercism::Api.new(options[:host], Exercism.user).current
+      body = JSON.parse(result.body)
+      puts "Current Assignments"
+      body['assignments'].each do |assignment|
+        track = assignment['track']
+        puts "Language: " + track.ljust(17) + "Exercise: " + assignment['slug']
+      end
+    end
+
     desc "stash [SUBCOMMAND]", "Stash or apply code that is in-progress"
     subcommand "stash", Stash
 
@@ -166,7 +180,12 @@ class Exercism
         end
       end
     end
-  end
 
-  
+    def spacing(track)
+      len = 17 - track.length
+      space = ''
+      len.times {space += ' '}
+      space
+    end
+  end  
 end

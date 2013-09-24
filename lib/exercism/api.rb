@@ -70,6 +70,13 @@ class Exercism
       JSON.parse(response.body)
     end
 
+    def current
+      conn.get do |req|
+        req.url endpoint('user/assignments/current')
+        req.params = {:key => user.key}
+      end
+    end
+
     private
 
     def get_stash(action, filename)
