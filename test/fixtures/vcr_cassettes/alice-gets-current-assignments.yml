@@ -7,33 +7,33 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      user-agent:
-      - github.com/kytrinyx/exercism CLI v0.0.25
-      accept-encoding:
+      User-Agent:
+      - github.com/kytrinyx/exercism CLI v0.0.26
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      accept:
+      Accept:
       - ! '*/*'
   response:
     status:
       code: 200
       message: OK
     headers:
-      content-type:
+      Content-Type:
       - application/json;charset=utf-8
-      content-length:
+      Content-Length:
       - '18'
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      set-cookie:
-      - rack.session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiJFYjJiMzE3ODY1OWU5MWU1MTc2MjJk%0AY2FiNWY0NjA5NTNjZTc2NDQ5YjkxYmMzZmYwNDllNTdjMWI1M2FkYTA3Y0ki%0ADXRyYWNraW5nBjsARnsISSIUSFRUUF9VU0VSX0FHRU5UBjsARiItYzdhOGQ2%0AMmUyYjAxNjE1NWU2Y2RlNTUwODU3ZDMxOTM1NTQ3NDM3M0kiGUhUVFBfQUND%0ARVBUX0VOQ09ESU5HBjsARiItZGRkMDk4OTE3NGYxOWE1YjE4NzkxMjEzY2M0%0AMGM1YTYwOWQyNTQ2Y0kiGUhUVFBfQUNDRVBUX0xBTkdVQUdFBjsARiItZGEz%0AOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ%3D%3D%0A--d2fcf3af8d55c163be77ef9872e229fb7a2de97e;
+      Set-Cookie:
+      - rack.session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiJFY2UzMTdhMTc3ZjlkMTZkYjc1ZjFk%0AMDcwNGIxM2I1OTRmMWZmMDFlNGYyYjJkNTIwZWUwYTc4MWVmZTIzZDU1YUki%0ADXRyYWNraW5nBjsARnsISSIUSFRUUF9VU0VSX0FHRU5UBjsARiItZjYxZWRk%0AYzg2NjFhZjU5M2JlYzNlZTY0MzIyZjgxZTBkNDBmMDdlMkkiGUhUVFBfQUND%0ARVBUX0VOQ09ESU5HBjsARiItZGRkMDk4OTE3NGYxOWE1YjE4NzkxMjEzY2M0%0AMGM1YTYwOWQyNTQ2Y0kiGUhUVFBfQUNDRVBUX0xBTkdVQUdFBjsARiItZGEz%0AOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ%3D%3D%0A--dff0a93591a346db42fd626ac38bcafc962c3467;
         path=/; HttpOnly
-      connection:
-      - close
-      server:
+      Connection:
+      - keep-alive
+      Server:
       - thin 1.5.1 codename Straight Razor
     body:
       encoding: US-ASCII
       string: ! '{"assignments":[]}'
-    http_version: '1.1'
-  recorded_at: Wed, 28 Aug 2013 22:34:30 GMT
+    http_version: 
+  recorded_at: Tue, 24 Sep 2013 01:23:54 GMT
 recorded_with: VCR 2.5.0

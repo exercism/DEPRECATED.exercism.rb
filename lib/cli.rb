@@ -132,7 +132,7 @@ class Exercism
       puts "Current Assignments"
       body['assignments'].each do |assignment|
         track = assignment['track']
-        puts "Language: " + track + spacing(track) + "Exercise: " + assignment['slug']
+        puts "Language: " + track.ljust(17) + "Exercise: " + assignment['slug']
       end
     end
 

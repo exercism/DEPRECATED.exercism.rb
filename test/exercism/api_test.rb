@@ -84,7 +84,7 @@ class ApiTest < Minitest::Test
       end
     end
   end
-  
+
   def test_save_stash_to_api
     submission = File.join(FileUtils.pwd, 'bob.rb')
     File.open(submission, 'w') do |f|
