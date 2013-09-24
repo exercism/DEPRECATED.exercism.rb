@@ -28,6 +28,7 @@ class Exercism
         :clojure => '_test.clj',
         :python => '_test.py',
         :go => '_test.go',
+        :haskell => '_test.hs',
       }
     end
 
