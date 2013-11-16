@@ -13,3 +13,17 @@ rescue StandardError => e
   puts
   raise e if ENV['EXERCISM_ENV'] =~ /test|development/
 end
+
+puts <<-DEPRECATED
+
+The exercism ruby gem has been deprecated.
+
+Please uninstall the gem, and install the latest CLI
+from https://github.com/exercism/cli/releases/latest
+
+For more info about getting started with the CLI, see
+http://exercism.io/help/how-to-access-exercises
+
+Thanks!
+
+DEPRECATED
